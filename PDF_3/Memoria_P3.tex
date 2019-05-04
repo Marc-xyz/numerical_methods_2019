@@ -1,0 +1,121 @@
+\documentclass[paper=a4, spanish, fontsize=11pt]{scrartcl}
+ 
+%Paquets d'idioma i codificació de caràcters
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+
+%Paquets d'escriptura matemàtica
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+%Modificacions i noves comandes
+\renewcommand\qedsymbol{QED} %Canviem el símbol de demostració final  de un quadrat en blanc a QED 
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\B}{\ensuremath{\mathcal{B}}}
+\newcommand{\esp}{\text{ }}
+\newcommand{\cod}[1]{{ \color{redviolet}\emph{#1}}}
+
+
+%Paquets de plantilla per pràctiques
+\usepackage{fourier} 
+\usepackage{paralist}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{titling}
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{fancyhdr} % Custom headers and footers
+
+%Altres paquets
+\usepackage[svgnames]{xcolor}
+\usepackage{multirow} %Serveix per agrupar files i columnes
+\usepackage{graphicx} %Serveix per introduir imatges
+\usepackage{url} % the same
+\usepackage{hyperref} %Serveix per que totes les referències que apareguin en el document pdf clicant-hi amb el ratolí, el visor pdf saltarà a la posició referenciada
+\usepackage{enumerate,paralist} %Serveix per ampliar les possibilitats dels entorns de llistes
+\usepackage{subfigure} %Serveix per poder generat subfigures.
+\usepackage{pstricks-add} %Paquets per a dibuixos amb GeoGebra
+\usepackage{centernot} %Serveix taxar coses bé com per exemple $\longrightarrow$ i $\exists$
+\usepackage{colortbl} %Serveix per ficar colors a les taules
+\usepackage{fancyhdr} %Serveix per fer el estil de capselera
+\usepackage{stackrel} %Serveix per fotre coses a dalt i a baix
+\usepackage{tcolorbox}% Serveix per ficar caixes 
+\usepackage{wasysym}
+%Altres dades del document
+\pagestyle{fancy}
+\definecolor{mygray}{rgb}{0.9,0.9,0.9} % Color definition
+\definecolor{redviolet}{RGB}{82,47,75}
+\definecolor{leet}{RGB}{4,4,75}
+\spanishdecimal{.}
+\usepackage[all]{xy}
+\renewcommand\thesubsection{\textit{\thesection}.\Roman{section}}
+
+% Autores y su correspondiente correo
+\author{Práctica 3 (Interpolación e integración numérica), Métodos numéricos } % Your names
+\date{\normalsize\today} 
+\rhead{\theauthor}
+%Serveix per lletre inicial més elegant i vanidosa 
+\usepackage{erewhon}
+\usepackage{lipsum}
+\usepackage{lettrine}
+\usepackage{GoudyIn}
+\definecolor{redviolet}{RGB}{82,87,75}
+\usepackage{xcolor} 
+\renewcommand{\LettrineFontHook}{\color{redviolet}\GoudyInfamily{}}
+\setcounter{DefaultLines}{3}%
+\usepackage{listings}
+%\setcounter{section}{-1}
+\begin{document}
+\begin{tcolorbox}
+	{\large\textbf{Memoria de práctica 2, (Ceros de funciones)}}  \hfill Fecha de Reporte: \textbf{01/04/2019} \\ 
+	\textbf{Métodos numéricos}  \hfill Alumno: \emph{Graells Ricardo, Marc}\\
+	2n curso del grado en Matemáticas
+	\hfill (\textbf{\texttt{NIU:} }\textit{1388471})
+\end{tcolorbox}
+%{$\begin{matrix}{\color{redviolet}\Large \ataribox}&\text{\Huge \color{redviolet}\textbf{Conclusiones}}\end{matrix}$ }
+\lettrine{D}e nuevo, tal como hemos hecho en la primera práctica, expondremos algunas de las conclusiones más relevantes aprendidas durante las sesiones de trabajo dedicadas a esta segunda práctica. Y igualmente quedara para futuras consultas de lo aprendido de forma esquemática por puntos.
+\\
+$ \esp$
+\small
+\begin{enumerate}[I]
+	\item En el caso concreto de las ecuaciones polinómicas cubicas de una variable real, aún disponer de las \cod{fórmulas de Cardano} para obtener  un valor exacto, a la práctica es mejor el uso de métodos numéricos; como por ejemplo el método de Newton.
+	\item En la línea del punto anterior, pero sin hacer solo referencia a funciones polinómicas, el uso de un método u otro  dependerá de factores como la proximidad a las soluciones que no siempre sera conocida, la seguridad de que la solución sea simple o dobles, o de su existencia (si es segura o no), la facilidad del cálculo de su derivada y otras cuestiones tratadas como el orden de convergencia de cada método. 
+	\item Nos familiarizamos con los siguientes métodos numéricos:
+	\begin{itemize}
+		\item Método de la \cod{Bisección} (p=1)
+		\item Método de \cod{Newton} (p=2)
+		\item Método de la  \cod{secante} (p=2)
+		\item Método de \cod{Halley} (p=3)
+		\item Algoritmo de \cod{Brent-Salamin} (p=2)
+	\end{itemize}  
+    \item La elección de un método u otro podría estructurase entorno a tres preguntas: \cod{\textquestiondown Converge?} y \cod{\textquestiondown Cómo de rápido converge?} 
+	\item Una idea que nace del trabajo en las sesiones de seminario, es la \cod{combinación de los métodos numéricos}, anteriormente citados, para obtener mejores resultandos que aplicando un único método.
+	\item Los \cod{métodos numéricos} tiene un gran \textit{potencial} que debe usarse con \textit{responsabilidad} sin desvincularse de una visión analítica ya que podríamos llegar a hacer cosas tan absurdas como buscar el cero de la función $f(x)=0.75x^4+0.025$ por inercia.
+	\item Esto anterior, a la práctica, se traduce en aplicar por ejemplo el \cod{Teorema de Bolzano} a $f(x)=x^3-x-40$. Como $f(2)=8-2-40<0$ y $f(4)=2^6-4-40=64-44>0$ sabemos que como mínimo hay una solución en [2,4] al ser la función continua. Esto mismo de comprobar la existencia de forma analítica ya sea hace en el apartado c) al deducir una fórmula de Cardano para la solución (en $\R$) y de hecho además vemos que esta es la única para la ecuación dada.
+	\item  Tanto en los Problemas 2,3 y 4 obtenemos un método numérico para determinar el \cod{orden de convergencia} de un método dado en función del decrecimiento y crecimiento de  los valores
+	\cod{
+	$$
+	\frac{e_k}{e_{k-1}}, \frac{e_k}{\left(e_{k-1}\right)^2}, \cdots, \frac{e_k}{\left(e_{k-1}\right)^4}, \cdots,\frac{e_k}{\left(e_{k-1}\right)^k}
+	$$  
+    }
+\pagebreak
+\section*{Anexo 1 (Cálculo aproximado de raíces cuadradas)}
+El objetivo es obtener una aproximación de la raíz cuadrada de un número utilizando la expresión 
+$$
+\sqrt{1+x}=f(x) \sqrt{1+g(x)}
+$$
+donde g es un infinitésimo de orden más pequeño que $x$ para $x$ tendiendo a $0$. Si elegimos $f(x)$ como una aproximación de $\sqrt{1+x}$ entonces se puede calcular $g(x)$ como
+$$
+g(x)=\frac{1+x}{{f(x)}^2}-1,
+$$
+\subsection*{A.1. Apartado a)}
+La función $f(x)$ puede elegirse como una función racional $p(x)/q(x)$, tal que $p$ y $q$ tienen el mismo grado de  y su desarrollo de MacLaurin coincide con el de $\sqrt{1+x}$ hasta cierto grado. Hallar una función racional, $f(x):=p(x)/q(x)$, cociente de dos lineales, tal que el desarrollo de MacLaurin de $p(x)-\sqrt{1+x}q(x)$ tenga los tres primeros términos nulos. Esta función $f$ se conoce como el aproximante de Padé de la función $\sqrt{1+x}$.
+\end{enumerate}
+
+
+\end{document}
+
+	
