@@ -1,0 +1,32 @@
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:_#Ejercicio_4_|a,b,d|_.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+ ¿Cuantos valores quiere sumar? 
+ Ejemplo:
+ 5000 
+4294967295
+
+ ¿Con que precision desea que funcione el programa? 
+ Escriba 1, para precision float. 
+ Escriba 2, para precision double. 
+2
+
+ Ha seleccionado precision double ( con 64 bits)
+La suma hasta el termino 4294967295, con formula (5), es:
+En orden creciente 1.6449340578346, difiere en 9.0136509367511E-09 . 
+En orden decreciente 1.6449340666154, difiere en 2.3283019956466E-10 . 
+
+La suma hasta el termino 4294967295, con formula alternativa, es:
+En orden creciente 1.644934066848156, difiere en -6.94999613415348E-14 . 
+En orden decrecirnte 1.644934066848226, difiere en 4.440892098500626E-16 . 
+
+Tiempo de calculo: 2.221285 minutos.
+ 
+//
+Comentarios:
+Conseguimos precisión máxima posible con 15 decimales correctos en poco más de 2 minutos !
+Hemos modificado codico %.14G pasa a %.16G.
+

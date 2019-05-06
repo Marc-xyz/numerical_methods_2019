@@ -1,0 +1,199 @@
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_1_[a]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+ Los valores para el polinomio evaluando  para alfa son, es decir, 
+ |x^3-x-40|=
+ Para precision float: 0.0003090
+ Para precision double: 3.2756020118541E-12
+ 
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_1_[b]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+ Iteracion [#1] (float) ------------> 5.09090900
+ Iteracion [#2] (float) ------------> 3.95931768
+ Iteracion [#3] (float) ------------> 3.56591606
+ Iteracion [#4] (float) ------------> 3.51806855
+ Iteracion [#5] (float) ------------> 3.51739359
+ Iteracion [#6] (float) ------------> 3.51739359
+
+ Iteracion [#1] (double) ------------> 5.090909090909091
+ Iteracion [#2] (double) ------------> 3.959317521070509
+ Iteracion [#3] (double) ------------> 3.565915971734928
+ Iteracion [#4] (double) ------------> 3.518068471972249
+ Iteracion [#5] (double) ------------> 3.517393647122214
+ Iteracion [#6] (double) ------------> 3.517393514052823
+ Iteracion [#7] (double) ------------> 3.517393514052818
+
+>Los valores para la raiz con 8 decimales correctos son:
+ *Para precision float, logrado en 6 iteraciones: 3.51739359
+ *Para precision double, logrado en 7 iteraciones:3.51739351
+
+ Iteracion [#8] (double) ------------> 3.517393514052818
+ Iteracion [#9] (double) ------------> 3.517393514052818
+ Iteracion [#10] (double) ------------> 3.517393514052818
+
+>Los valores para la raiz con 15 decimales correctos son:
+ *Para precision double, logrado en 10 iteraciones: 3.517393514052818
+ *Para precision float no consideramos ningun resultado 
+   (no esperamos mas de 8 decimales correctos).
+   
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_1_[c]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+>El valor aproximado de la solucion por formulas de Cardano:
+ *Para precision double es 7.413302725859883,
+ con un error absoluto de aproximadamente 3.25315E-10,
+
+>Los valores para la raiz con 15 decimales correctos son:
+
+
+ Iteracion [#1] (Biseccion,double) ------------> 5
+ Iteracion [#2] (Biseccion,double) ------------> 6.5
+ Iteracion [#3] (Biseccion,double) ------------> 7.25
+ Iteracion [#4] (Biseccion,double) ------------> 7.625
+ Iteracion [#5] (Biseccion,double) ------------> 7.4375
+ Iteracion [#6] (Biseccion,double) ------------> 7.34375
+ Iteracion [#7] (Biseccion,double) ------------> 7.390625
+ Iteracion [#8] (Biseccion,double) ------------> 7.4140625
+ Iteracion [#9] (Biseccion,double) ------------> 7.40234375
+           :
+           :
+           :
+           :
+ Iteracion [#51] (Biseccion,double) ------------> 7.413302725857895
+ Iteracion [#52] (Biseccion,double) ------------> 7.413302725857896
+ Iteracion [#53] (Biseccion,double) ------------> 7.413302725857897
+ Iteracion [#54] (Biseccion,double) ------------> 7.413302725857898
+ Iteracion [#55] (Biseccion,double) ------------> 7.413302725857898
+ Iteracion [#56] (Biseccion,double) ------------> 7.413302725857898
+ *(c1) Con Metodo de la Biseccion logrado en 56 iteraciones es:
+ 7.413302725857898
+
+
+ Iteracion [#1] (Secante,double) ------------> 6.746987951807229
+ Iteracion [#2] (Secante,double) ------------> 7.359991138481768
+ Iteracion [#3] (Secante,double) ------------> 7.418455773193066
+ Iteracion [#4] (Secante,double) ------------> 7.413265278979376
+ Iteracion [#5] (Secante,double) ------------> 7.413302699681578
+ Iteracion [#6] (Secante,double) ------------> 7.413302725858031
+ Iteracion [#7] (Secante,double) ------------> 7.413302725857898
+ Iteracion [#8] (Secante,double) ------------> 7.413302725857898
+ *(c2) Con Metodo de la Secante logrado en 8 iteraciones es: 
+ 7.413302725857898
+ 
+
+
+ Iteracion [#1] (Newton,double) ------------> 37.81818181818182
+ Iteracion [#2] (Newton,double) ------------> 25.31124646795868
+ Iteracion [#3] (Newton,double) ------------> 17.0911757783056
+ Iteracion [#4] (Newton,double) ------------> 11.86410739375743
+ Iteracion [#5] (Newton,double) ------------> 8.87768728515605
+ Iteracion [#6] (Newton,double) ------------> 7.642542744562808
+ Iteracion [#7] (Newton,double) ------------> 7.42014916059355
+ Iteracion [#8] (Newton,double) ------------> 7.413309079459719
+ Iteracion [#9] (Newton,double) ------------> 7.413302725863377
+ Iteracion [#10] (Newton,double) ------------> 7.413302725857898
+ Iteracion [#11] (Newton,double) ------------> 7.413302725857898
+ *(c3) Con Metodo de Newton logrado en 11 iteraciones es:
+ 7.413302725857898
+
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_2_[a]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+ Introduzca un valor  para el pivote x_0 en [2,10] 
+ Ejemplo:  6.0
+6.0
+
+ Iteracion [#1] ------------> 7.775700934579439
+ Iteracion [#2] ------------> 7.592620226964894
+ Iteracion [#3] ------------> 7.46045764470081
+ Iteracion [#4] ------------> 7.417052730798757
+ Iteracion [#5] ------------> 7.413331369857231
+ Iteracion [#6] ------------> 7.413302727865109
+ Iteracion [#7] ------------> 7.413302725857899
+ Iteracion [#8] ------------> 7.413302725857898
+ Iteracion [#9] ------------> 7.413302725857898
+>El valores para la raiz con 15 decimales correctos es:
+ *Con Metodo Nuevo logrado en 8 iteraciones:
+ 7.413302725857898
+>Los valores para el estudio de la convergencia son:
+(e_k/e_(k_1), e_k/(e_(k-1))^2, e_k/(e_(k-1))^3, e_k/(e_(k-1))^4)
+ (0.1031033459,  0.0580634632,  0.0326988977,  0.018414642)
+ (0.7218815351,  3.942968893,  21.53677984,  117.63544)
+ (0.328420595,  2.484974108,  18.80240281,  142.26722)
+ (0.08573593649,  1.975258762,  45.50772215,  1048.4463)
+ (0.007696644473,  2.068233798,  555.7735007,  149346.84)
+ (7.007928741E-05,  2.446732305,  85424.65534,  2.982497E+09)
+
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_3_[a,b]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+ Introduzca un valor  para el pivote x_0 en [2,10] 
+ Ejemplo:  6.0
+6.0
+
+ Iteracion [#1] ------------> 7.367274194633129
+ Iteracion [#2] ------------> 7.413301513389312
+ Iteracion [#3] ------------> 7.413302725857898
+ Iteracion [#4] ------------> 7.413302725857898
+>El valores para la raiz con 15 decimales correctos es:
+ *Con Metodo Halley logrado en 3 iteraciones es:
+ 7.413302725857898
+>Los valores para el estudio de la convergencia son:
+
+ (e_k/e_(k_1), e_k/(e_(k-1))^2, e_k/(e_(k-1))^3, e_k/(e_(k-1))^4)
+ (0.03366356137,  0.02462092936,  0.01800730933,  0.0131702254)
+ (2.634236837E-05,  0.000572320289,  0.01243436082,  0.2701517524)
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_4_[a]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+>Valores en funcion de la iteracion:
+ Iteracion [#1] ------------> 3.187672642712106
+ Iteracion [#2] ------------> 3.141680293297648
+ Iteracion [#3] ------------> 3.141592653895451
+ Iteracion [#4] ------------> 3.141592653589822
+ Iteracion [#5] ------------> 3.141592653589871
+ Iteracion [#6] ------------> 3.141592653589969
+ Iteracion [#7] ------------> 3.141592653590164
+ Iteracion [#8] ------------> 3.141592653590555
+ Iteracion [#9] ------------> 3.141592653591336
+ Iteracion [#10] ------------> 3.1415926535929
+           :
+           :
+           :
+ Iteracion [#43] ------------> 3.168680410379092
+ Iteracion [#44] ------------> 3.1962393473991
+ Iteracion [#45] ------------> 3.252820808569564
+ Iteracion [#46] ------------> 3.372214121546607
+ Iteracion [#47] ------------> 3.639377525572796
+ Iteracion [#48] ------------> 4.324611561219724
+ Iteracion [#49] ------------> 6.936766071935278
+ Iteracion [#50] ------------> -33.34322933969357
+ Iteracion [#51] ------------> -2.643460057489862
+ Iteracion [#52] ------------> -0.9303242547908374
+ Iteracion [#53] ------------> -0.4051703015291954
+ Iteracion [#54] ------------> -0.1903128537423291
+ Iteracion [#55] ------------> -0.09235894540139374
+ Iteracion [#56] ------------> -0.04551049649586506
+ Iteracion [#57] ------------> -0.02259161221962972
+ Iteracion [#58] ------------> -0.01125533679499404
+ Iteracion [#59] ------------> -0.005617605342371539
+ Iteracion [#60] ------------> -0.002806293649180977
+           :
+           :
+           :
+ Iteracion [#97] ------------> -2.040025069181112E-14
+ Iteracion [#98] ------------> -1.020012534590553E-14
+ Iteracion [#99] ------------> -5.100062672952754E-15
+ Iteracion [#100] ------------> -2.550031336476375E-15
+
+>Los valores para el estudio de la convergencia son, antes de iteracion 6:
+ (e_k/e_(k_1), e_k/(e_(k-1))^2, e_k/(e_(k-1))^3, e_k/(e_(k-1))^4)
+ (0.001905521316,  0.04143126717,  0.9008295444,  19.58650854)
+ (3.48734528E-06,  0.03979197932,  454.0421126,  5180798.832)

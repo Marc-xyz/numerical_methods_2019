@@ -1,0 +1,405 @@
+\documentclass[paper=a4, spanish, fontsize=12pt]{scrartcl}
+ 
+%Paquets d'idioma i codificació de caràcters
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+
+%Paquets d'escriptura matemàtica
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+%Modificacions i noves comandes
+\renewcommand\qedsymbol{QED} %Canviem el símbol de demostració final  de un quadrat en blanc a QED 
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\B}{\ensuremath{\mathcal{B}}}
+\newcommand{\esp}{\text{ }}
+\newcommand{\cod}[1]{{ \color{redviolet}\texttt{#1}}}
+
+
+%Paquets de plantilla per pràctiques
+\usepackage{fourier} 
+\usepackage{paralist}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{titling}
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{fancyhdr} % Custom headers and footers
+
+%Altres paquets
+
+\usepackage[svgnames]{xcolor}
+\usepackage{multirow} %Serveix per agrupar files i columnes
+\usepackage{graphicx} %Serveix per introduir imatges
+\usepackage{url} % the same
+\usepackage{hyperref} %Serveix per que totes les referències que apareguin en el document pdf clicant-hi amb el ratolí, el visor pdf saltarà a la posició referenciada
+\usepackage{enumerate,paralist} %Serveix per ampliar les possibilitats dels entorns de llistes
+\usepackage{subfigure} %Serveix per poder generat subfigures.
+\usepackage{pstricks-add} %Paquets per a dibuixos amb GeoGebra
+\usepackage{centernot} %Serveix taxar coses bé com per exemple $\longrightarrow$ i $\exists$
+\usepackage{colortbl} %Serveix per ficar colors a les taules
+\usepackage{fancyhdr} %Serveix per fer el estil de capselera
+\usepackage{stackrel} %Serveix per fotre coses a dalt i a baix
+\usepackage{tcolorbox}% Serveix per ficar caixes 
+
+%Altres dades del document
+\pagestyle{fancy}
+\definecolor{mygray}{rgb}{0.9,0.9,0.9} % Color definition
+\definecolor{redviolet}{RGB}{5,47,75}
+\definecolor{leet}{RGB}{4,4,75}
+\spanishdecimal{.}
+\usepackage[all]{xy}
+
+
+
+% Autores y su correspondiente correo
+\author{Práctica 2 (Ceros de funciones), Métodos numéricos } % Your names
+\date{\normalsize\today} 
+\rhead{\theauthor}
+
+\setcounter{section}{-1}
+\begin{document}
+\begin{tcolorbox}
+	{\large\textbf{Práctica 2, (Ceros de funciones) }}  \hfill Fecha de Reporte: \textbf{31/03/2019} \\ 
+	\textbf{Métodos numéricos}  \hfill Alumno: \emph{Graells Ricardo, Marc}\\
+	2n curso del grado en Matemáticas
+	\hfill (\textbf{\texttt{NIU:} }\textit{1388471})
+\end{tcolorbox}	
+\section{Resumen}
+En el presente documento se comentan las soluciones a los ejercicios  propuestos en las sesiones de \textit{Seminarios de Métodos Numéricos} de los días 11, 18 y 25 de marzo. Los ficheros \texttt{.c} con las implementaciones del código en lenguaje C se adjuntan tal como se detalla en documento del mismo subdirectorio \texttt{README.txt}.
+\footnotesize
+%\tableofcontents
+\normalsize
+\section{Primer problema}
+\subsection{Apartado a y b}
+Analíticamente si $f(x)=x^3-x-40=0$ y por fórmulas de Cardano $\alpha$ cumple la ecuación, es decir, es raíz del polinomio $P_1(x)=x^3-x-40$. Esperamos que $ \alpha^3-\alpha-40$ sea cero. Implementado en C con precisión \cod{float} y \cod{double}.
+ \begin{table}[ht]
+	\small
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		Precisión & $|\alpha^3-\alpha-40|$ \\ \hline
+		\cod{float}&$3.09\times 10^{-4}$\\ 
+		\hline
+		\cod{double}&3.27560$\times 10^{-12}$
+		 \\ 
+		 \hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos  $|P_1(\alpha)|$ mediante \cod{pr1\_a\_fd.c}.}
+	\label{tab:pr1a}
+	\normalsize
+\end{table}
+ Tal como vemos en Tabla \ref{tab:pr1a} obtenemos errores del orden de $10^{-4}$ y $10^{-12}$ cuando cabria esperar  $10^{-7}$ y $10^{-16}$, respectivamente. Por tanto comprobamos que hay error de cancelación y concluimos que \textit{evaluar directamente} no es optimo.
+
+Implementamos el método de Newton en lenguaje C para  obtener una aproximación de $\alpha$, raíz del polinomio $P_1(x)=x^3-x-40$. 
+
+Antes de ejecutarlo podemos estimar que, si suponemos que el método converge, la raíz del polinomio es simple y los valores de la sucesión distan de un extremo relativo próximo al eje x; esperamos que en estas condiciones los decimales correctos se dupliquen en cada iteración. Suponiendo que obtenemos 2 decimales correctos en la tercera aproximación, conjeturamos que en  7 iteraciones aproximadamente tengamos 15 decimales correctos, pongamos entorno a unas diez (iteraciones) por usar potencias, $10^1$. 
+Compilamos y ejecutamos el programa \footnote{Ver \cod{pr1\_b\_fd.c} . }. Observamos los valores en Tabla \ref{tab:pr1b}.
+ \begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Precisión &$\begin{matrix}
+		\text{\# Iteración}\\
+		\color{black!60}\text{suficiente}\\
+		 \text{ necesaria}\\
+		\end{matrix}$ & $\alpha$ (8 decimales correctos)&$\begin{matrix}
+		\text{\# Iteración}\\
+		\color{black!60} \text{suficiente}\\
+		\text{necesaria}\\
+		\end{matrix}$  &  $\alpha$ (15 decimales correctos) \\ \hline
+		\cod{float}& ({\color{black!60}5},{6})&3.5173935{\color{red!80!black!80}9}&{\color{red!80!black!80}$\times$} &\textit{Excede precisión de la variable}
+		\\ \hline
+		\cod{double}&({\color{black!60}6},{7})&3.51739351&({\color{black!60}7},{10})
+		&3.51739351405282
+		\\ 
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos para $\alpha$ con $x_0=2.0$  mediante \cod{pr1\_b\_fd} .Observamos en {\color{black!60}gris} número de iteraciones donde ya obtenemos los decimales correctos deseados.El segundo componente de la 2-tupla (en color negro) es el número de iteraciones que nos asegura los decimales correctos deseados aplicando que $|x_{i+1}-x_{i}|\approx|x_i-\alpha|$. En {\color{red!80!black!80}rojo} destacamos el decimal incorrecto en \cod{float}.}
+	\label{tab:pr1b}
+	\normalsize
+\end{table}
+Los resultados son aproximadamente los esperados, observamos que con precisión \cod{float} no obtenemos los $8$ decimales correctos. A partir de aquí solo utilizaremos variables \cod{double} ya que deseamos más decimales correctos; mayor precisión de la que puede ofrecer \cod{float} .
+\subsection{Apartado c}
+Obtenemos fórmula de Cardano para la ecuación $x^3-x-400=0$, al ser el discriminante positivo ($\Delta>0$) estamos en el caso de dos raíces complejas y una real. Tenemos pues que la fórmula de Cardano para la solución es
+\footnotesize
+$$
+\beta=\sqrt[3]{\frac{-q+\sqrt{\Delta}}{2}}+\sqrt[3]{\frac{-q-\sqrt{\Delta}}{2}}\approx7.41330 \quad \text{ donde } \begin{cases}
+p=-1\\
+q=-400\\
+\Delta=q^2+\frac{4}{27}p^3 \approx  399.8 > 0 \\
+2\leq \beta \leq 8
+\end{cases}
+$$ 
+\normalsize
+Evaluando el valor de $\beta$ obtenido por fórmulas de Cardano estimamos un error absoluto de $3.25315\times10^{-10}$. Implementando en lenguaje C los métodos iterativos de Bisección (intervalo $[2,8]$) \textbf{(c1)}, Secante \textbf{(c2)} (intervalo $[2,8]$) y Newton \textbf{(c3)} (pivote $x_0=2.0$) obtenemos 15 decimales correctos de $\beta$, vemos Tabla \ref{tab:pr1c}.
+\footnote{$\beta$ con 15 decimales correctos: \cod{7.413302725857898}.}
+ \begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		Método &$\begin{matrix}
+		\text{\# Iteración}\\
+		(\color{black!60}\text{suficiente},
+		\color{black}\text{ necesaria})\end{matrix} $
+		\\ \hline
+		Bisección&({\color{black!60}54},56) 
+		\\ \hline
+		Secante&({\color{black!60}7},8)
+		\\ \hline
+		Newton&({\color{black!60}10},11)
+		\\
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Observamos en {\color{black!60}gris} número de iteraciones donde ya obtenemos los decimales correctos deseados.El segundo componente de la 2-tupla (en color negro) es el número de iteraciones que nos asegura los decimales correctos mediante \cod{pr1\_c\_d.c}.}
+	\label{tab:pr1c}
+	\normalsize
+\end{table}
+Con este ejemplo y los que siguen en el documento podemos \textit{intuir} que probablemente la mayoría de métodos de convergencia numérica que convergen de forma rápida (es decir tienen mayor \textbf{orden de convergencia}) normalmente tienen un \textbf{intervalo de convergencia}  \textit{relativamente pequeño}, es decir, si dado un pivote o intervalo numérico el método converge o no. La estrategia es sencilla, si buscamos la raíz de un polinomio probablemente será interesante comprobar su existencia de forma analítica en primer lugar, acotar la solución por método  de la Bisección (orden de convergencia lineal) con unas pocas iteraciones en segundo lugar y finalmente aplicar el método de Newton (cuadrático) ; uniendo los \textit{puntos fuertes} de todos los métodos. Opcionalmente si la derivada es tediosa se puede optar por el método de la secante (cuadrático).
+\section{Segundo problema}
+\subsection{Apartado a}
+Implementamos el método propuesto en lenguaje C \footnote{Ver \cod{pr2\_a\_d.c} . }. Probamos para tres valores concretos de $x_0$.
+ Si $x_0=2.0$ el método no converge, de hecho esto ya lo podíamos esperar ya que se exige $x_0$ próximo a $x^*$, raíz. Si consideramos $x_0=7.0$ obtenemos convergencia como cabría esperar, ya que $|x_0-x*|< 1$. 
+
+Analizamos ahora la convergencia con $x_0=6.0$. Observamos que el método da 15 decimales correctos en  la iteración número \cod{8}. La convergencia del método la obtenemos de forma \textit{experimental}  comparando los valores \footnote{Cogemos tan solo cuatro valores, ya que no esperamos convergencia mayor que cubica.} 
+\footnotesize
+$$
+\frac{e_k}{e_{k-1}}, \frac{e_k}{\left(e_{k-1}\right)^2}, \cdots, \frac{e_k}{\left(e_{k-1}\right)^4}
+$$ 
+\normalsize
+Partiendo de la definición de orden de convergencia  de una succión, si $p,m \in \{1,2,3,4\}$ representa un valor de convergencia, es decir, lineal, cuadrática, cubica y cuártica respectivamente. Sea $p$ el orden de convergencia del método, esperamos que: \footnote{Si p=1 exigiremos además que $C<1$. }
+\small
+$$
+\begin{cases}
+\underset{n \to \infty}{\lim} \frac{e_k}{\left(e_{k-1}\right)^m}= 0 \quad \text{ si } \esp m<p,\\
+\underset{n \to \infty}{\lim}
+\frac{e_k}{\left(e_{k-1}\right)^m}= C \in \R \quad \text{ si } \esp m=p \text{ i } \\
+\underset{n \to \infty}{\lim}
+\frac{e_k}{\left(e_{k-1}\right)^m}= \infty \quad \text{ si } \esp m>p\\
+\end{cases}
+$$
+\normalsize
+A la practica, tal como vemos en Tabla \ref{tab:pr2} con 7 filas y 4 columnas de datos, analizamos el crecimiento y decrecimiento de estos valores más que su orden de magnitud absoluto. En concreto por crecimiento comparado, es decir, si crecen o decrecen en \textit{exceso} comparativamente.
+\begin{table}[ht]
+	\small
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		 $\begin{matrix} \text{Iteración} \\ \text{[\#]} \end{matrix}$
+		&$\frac{e_k}{e_{k-1}}$
+		&$\frac{e_k}{\left(e_{k-1}\right)^2}$
+		&$\frac{e_k}{\left(e_{k-1}\right)^3}$
+		&$\frac{e_k}{\left(e_{k-1}\right)^4}$
+		\\ \hline
+		\cod{k=2}& \color{black!75}0.1031033459&\color{black!75}0.0580634632&\color{black!75}0.0326988977&\color{black!75}0.018414642
+		\\ \hline
+		\cod{k=3}&0.7218815351& 3.942968893
+		& 21.53677984 &117.63544
+		\\ \hline
+		\cod{k=4}& \color{black!75}0.328420595& \color{black!75}2.484974108& \color{black!75}18.80240281& \color{black!75}142.26722
+		\\ \hline
+		\cod{k=5} &0.08573593649&  1.975258762& 45.50772215& 1048.4463
+		\\ \hline
+		\cod{k=6}&\color{black!75}0.007696644473&\color{black!75}2.068233798&  \color{black!75}555.7735007&\color{black!75}149346.84
+		\\ \hline
+		\cod{k=7}&7.007928741E-05&2.446732305&  85424.65534&2.982497E+09
+		\\ \hline
+		\cod{k=8}&\color{black!75}4.424939312E-07&\color{black!75}220.4521916&\color{black!75}1.098301363E+11&\color{black!75}5.47178E+19
+		\\ \hline
+	\end{tabular}
+	\normalsize
+	\caption{ \footnotesize Resultados obtenidos con \cod{pr2\_a\_d} para $x_0=6.0$. Estimamos convergencia como mucho cuártica. Observamos que en la iteración 7 se despejan todas las dudas respecto el orden de convergencia  del método, que claramente es cuadrático.}
+	\label{tab:pr2}
+\end{table}
+Considerando esto obtenemos que la convergencia del nuevo método para el Problema 1 es \textbf{cuadrática}.
+\section{Tercer problema}
+\subsection{Apartado a y b}
+Implementamos el método de Halley en lenguaje C \footnote{Ver \cod{pr3\_ab\_d.c} . }. Probamos para solucionar ecuación del apartado c) del Problema 1 con tres valores concretos de $x_0$. Procedemos como en Problema 2. Para $x_0=2.0$ obtenemos convergencia con 15 decimales correctos en la quinta iteración. Para $x_0=6.0,7.0$ obtenemos 15 decimales correctos en 3 iteraciones.
+Utilizamos criterio del problema anterior, resumido en Tabla \ref{tab:pr3}. 
+\begin{table}[ht]
+	\small
+	\centering
+	\begin{tabular}{|c|>{\color{black!75}}c|c|>{\color{black!75}}c|c|}
+		\hline
+		$\begin{matrix} \text{Iteración} \\ \text{[\#]} \end{matrix}$
+		&$\frac{e_k}{e_{k-1}}$
+		&$\frac{e_k}{\left(e_{k-1}\right)^2}$
+		&$\frac{e_k}{\left(e_{k-1}\right)^3}$
+		&$\frac{e_k}{\left(e_{k-1}\right)^4}$
+		\\ \hline
+		\cod{k=2}& 0.03366356137&  0.02462092936&  0.01800730933& 0.0131702254
+		\\ \hline
+		\cod{k=3}&2.634236837E-05& 0.000572320289&  0.01243436082&  0.2701517524
+		
+		\\ \hline
+	\end{tabular}
+	\normalsize
+	\caption{ \footnotesize Resultados obtenidos con \cod{pr3\_ab\_d} para $x_0=6.0$. Estimamos convergencia como mucho cuártica. Concluimos orden de convergencia cubico.}
+	\label{tab:pr3}
+\end{table}
+Sutilmente vemos que en este caso el orden de convergencia es cubico,
+esto lo podemos observar ya que los dos primeros valores disminuyen  
+4 y 2 ordenes  de magnitud,  el tercero mantiene el orden de magnitud y el
+cuarto aumenta un orden de magnitud. Por tanto, descartando, obtenemos
+numéricamente que el orden de convergencia  del método es de orden 3 o \textbf{cubica}.
+\section{Cuarto problema}
+Con ayuda de \cod{pr4\_a\_d.c} Observamos que con tan solo \cod{k=5} iteraciones ja obtenemos 14 decimales\footnote{3.14159265358987{\color{red!80!black!80}1} donde el decimoquinto decimal correcto debería ser {\color{green!80!black!80}9}. } correctos de $\pi$. Efectuando el estudio de convergencia, como en Problema 2 y 3, obtenemos orden de convergencia cuadrático. 
+A partir de aquí el valor resultante se va alejando de $\pi$, es decir, $|\pi-p_k|$ crece. En las iteración \cod{k=45},\cod{k=46}, y \cod{k=47} obtenemos valores de aproximadamente $3.2528, \esp 3.3722,\esp 3.6393$. En las iteraciones \cod{k=48} y \cod{k=49}; 4.3462 y 6.9367, respectivamente. El la iteración \cod{k=50} obtenemos un valor de -33.34322 aproximadamente. A partir de aquí cada vez obtenemos valores negativos muy pequeños, en la iteración \cod{k=100} obtenemos un valor de orden de $10^{-15}$; concluyendo que el método ha degenerado totalmente, probablemente por error de cancelación.
+
+ El método comienza a dar problemas bastante cerca de la precisión máxima para \cod{double} incentivando  pensar que el error es causado por la precisión finita. Por D.A.G\footnote{Desigualdad aritmético-geométrica.} tenemos que $b_k \leq a_k$, de hecho, el límite de estos existe y coincide $\underset{k \to \infty}{\lim}a_k=\underset{k \to \infty}{\lim}b_k$, es decir, esperamos valores cada vez más próximos y como la convergencia es rápida en la quinta iteración estos valores ,que cada vez son más próximos, no mejoran el resultado que queda degenerada al augmentar el número de operaciones. Algunas curiosidad sobre el método ,ver .\footnote{ {A.Gasull,} \textit{Fes matemàtiques! }, pág: 26-27 ,(2000).}  
+
+\end{document}
+\section{Segundo ejercicio}
+\subsection{Apartado a y b}
+\begin{proof}
+	~Suponemos que $b^2>>4ac$ , para la formula con $+$, entonces:
+	\small
+	$$
+	x_+=\frac{-b+\sqrt{b^2-4ac}}{2a} \approx \frac{-b+\sqrt{b^2}}{2a} 
+	=\frac{-b+b}{2a}=0 
+	$$
+	\normalsize
+	Observamos un claro error de cancelación.
+\end{proof}
+%\subsection{Apartado b}
+La alternativa se basa en intentar eliminar el error de cancelación cambiando la expresión a calcular mediante manipulaciones algebraicas, en concreto multiplicar por el conjugado:
+\small
+$$ 
+x_+=\frac{-b+\sqrt{b^2-4ac}}{2a} \cdot \frac{-b-\sqrt{b^2-4ac}}{-b-\sqrt{b^2-4ac}}= \frac{2c}{-b-\sqrt{b^2-4ac}}
+$$
+\normalsize
+\subsection{Apartado c}
+Probamos con dos casos similar al propuesto por el apartado \textbf{a}, $x^2+10000x+1=0$ y $0.025x^2+70000x+37=0$, ya que $(10 000)^2<<4$ y $(70 000)^2<<3.7$ respectivamente.
+\begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{|c|c|l|l|}
+		\hline
+		\textbf{Programa} & Ecuación& \cod{float}&\cod{double} \\ \hline & & &  \\
+		\multirow{2}{*}{\textbf{\texttt{ex2\_a\_fd}}} 
+		&$x^2-x-1=0$
+		&$\begin{cases}x_+&=1.6180340,\\x_-&=-0.6180340\end{cases}$ 
+		&$\begin{cases}x_+&=1.6180339887499,\\ x_-&=-0.61803398874989   \end{cases}$ 
+		\\
+		&\textcolor{black!75}{$x^2+10000x+1=0$} 
+		&\textcolor{black!75}{$\begin{cases}x_+&={\color{red!80!black!80}0.0000000},\\\color{leet} x_-&=-1.00000\times 10^{4} \end{cases}$} 
+		&\textcolor{black!75}{$\begin{cases}x_+&=-0.0001000000011,\\x_-&= -9999.9999\end{cases}$} 
+		\\ 
+		&{$0.025x^2+70000x+37=0$}
+		&$\begin{cases}x_+&={\color{red!80!black!80}0.0000000},\\x_-&=-2.80000\times 10^{6}\end{cases}$
+		&$\begin{cases}x_+&=-0.52857154514 \times {10}^{-3},\\x_-&=-2.79999999994 \times 10^{6}\end{cases}$
+		\\
+		\hline
+		\multirow{2}{*}{\textbf{\texttt{ex2\_b\_fd}}} 
+		&$x^2-x-1=0$
+		&$\begin{cases}x_+&=1.6180340,\\x_-&=-0.6180340\end{cases}$ 
+		&$\begin{cases}x_+&=1.6180339887499,\\ x_-&=-0.61803398874989   \end{cases}$ 
+		\\
+		&\textcolor{black!75}{$x^2+10000x+1=0$} 
+		&\textcolor{black!75}{$\begin{cases}x_+&={\color{green!60!black!90}-0.0001000},\\ x_-&=1.0000000\times 10^{4} \end{cases}$} 
+		&\textcolor{black!75}{$\begin{cases}x_+&=-0.0001000000011,\\x_-&= -0.99999999 \times 10^{4} \end{cases}$} 
+		\\ 
+		&{$0.025x^2+70000x+37=0$}
+		&$\begin{cases}x_+&={\color{green!60!black!90}-0.5286\times 10^{-3}},\\x_-&=-2.80000000 \times 10^{6}\end{cases}$
+		&$\begin{cases}x_+&=-0.52857142867\times 10^{-3} ,\\x_-&=-2.7999999994 \times 10^{6}\end{cases}$
+		\\
+		\hline
+	\end{tabular}
+	\normalsize
+	\caption{\footnotesize Resultados obtenidos para las dos variaciones de los programas. Observamos que se {\color{green!60!black!90}corrigen} (en verde) los {\color{red!80!black!80}errores de cancelación}(en rojo). El primer ejemplo es solo de referencia, como solución conocida.}
+	\label{tab:ex2}
+\end{table}
+En la Tabla \ref{tab:ex2} se muestran los errores de cancelación y su corrección mediante la variación de la fórmula empleada para el cálculo. También cabe destacar que el código en \cod{C} implementado aún puede fallar si $a \approx 0$ (este caso no lo consideramos por enunciado,ecuación de primer grado) en \cod{ex3\_a\_fd}. En \cod{ex2\_b\_fd} si $c\approx 0$ y $a\neq 0$ también anticipamos un mal resultado, que sé podría solucionar con un \cod{if}. El caso de que el polinomio solo tenga raíces complejas el programa (en las dos variaciones) imprime un mensaje de error.
+\section{Tercer ejercicio}
+\subsection{Apartado a y b}
+En este caso cabe destacar que el código en \cod{C}, lee directamente de un fichero y retorna el resultado de \textbf{(3)} y \textbf{(4)} de la hoja de enunciados.
+Observando los resultados de  evaluar el vector $x=\{10000,10001,10002\}^T$ en la Tabla \ref{tab:ex3} nos encontramos con un nuevo error de cancelación en la fórmula (4), es decir, para $s^2_n=\frac{1}{n-1}\left( \sum^n_{i=1}x^2_i-\frac{1}{n}\left(\sum^n_{i=1}x_i\right)^2\right)$.
+\begin{table}[h]
+	\centering
+	\small
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Fórmula&\cod{float}&\cod{double} \\ \hline
+		\textbf{ (3) }&1.0000000&1 \\ \hline
+		\textbf{ (4) }&{\color{red!80!black!80}0.0000000}&1 \\ \hline
+	\end{tabular}
+	\caption{ \footnotesize Resultados obtenidos para las dos formulaciones diferentes con el programa \cod{ex3\_a\_fd} para el vector $x=\{10000,10001,10002\}^T$.}
+	\label{tab:ex3}
+	\normalsize
+\end{table}
+\subsection{Apartado c y d}
+Implementando en \cod{C} podemos hacer una lista de valores tan elaborada y extensa como queramos. Pero consideremos los ejemplos \cod{vector\_2.txt} y \cod{vector\_3.txt} generados por \cod{ex3\_a\_fd.c}
+\small
+$$L_{1\leq i \leq 100}=\begin{cases} 10.000.100 \text{ si }i\leq 50 \text{, }\\ 10.000.000 \text{ si }i>50  \end{cases} \text{ y }
+\esp H_{1 \leq i \leq 1000} = \begin{cases} 1.000.000.100 \text{ si }i\leq 500 \text{, } \\ 1.000.000.000 \text{ si } i>500  \end{cases}$$
+\normalsize
+Los resultados para L son  \cod{float}: $50.2920761$ y $8713.2734375$, para \cod{double}:  $50.251890762961$ en los dos caos; para fórmulas (3) (4) respectivamente. Los resultados para H son \cod{float}: $9540.9863281 
+$ y $-NAN$, para \cod{double}:  $50.025018765639 $ y $59.518791036835$; para fórmulas (3) (4) respectivamente. El valor esperado por construcción de los ejemplos es el mismo y es aproximadamente 50. El valor -NAN indica que sé ha intentado calcular la raíz de un numero negativo originado por error de cancelación. Concluimos que (4) es \textbf{numéricamente inestable}.
+\section{Cuarto ejercicio}
+\subsection{Apartado a, b y c}
+Implementamos en \cod{C} un nuevo programa que imprime la suma parcial enésima procediendo de forma creciente y decreciente con precisión simple o doble. Los resultados se muestran en Tabla \ref{tab:ex4}.
+\begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		$S_n$& \cod{float} & diferencia \\ \hline
+		\multirow{1}{*}{\textbf{\texttt{n=5000}}}
+		&$\begin{cases}x_\vartriangle&=1.6447253,\\x_\triangledown&=1.6447340\end{cases}$ 
+		&$\begin{cases}d_\vartriangle&\approx0.0002087,\\ d_\triangledown&\approx0.0002000  \end{cases}$ 
+		\\ \hline
+		\multirow{1}{*}{\textbf{\texttt{n=10000}}}
+		&$\begin{cases}x_\vartriangle&=1.6447253,\\x_\triangledown&=1.6448340\end{cases}$ 
+		&$\begin{cases}d_\vartriangle&\approx0.0002087,\\ d_\triangledown&\approx0.0001000  \end{cases}$ 
+		\\\hline
+		\multirow{1}{*}{\textbf{\texttt{n=100000}}}
+		&$\begin{cases}x_\vartriangle&=1.6447253,\\x_\triangledown&=1.6448340\end{cases}$ 
+		&$\begin{cases}d_\vartriangle&\approx0.0002087,\\ d_\triangledown&\approx0.0001000  \end{cases}$ 
+		\\
+		\hline
+		$S_n$& \cod{double}& diferencia \\ \hline  \multirow{1}{*}{\textbf{\texttt{n=5000}}} 
+		&$\begin{cases}x_\vartriangle&=1.6447340868469,\\x_\triangledown&=1.6447340868469\end{cases}$ 
+		&$\begin{cases}d_\vartriangle&\approx1.99980\times10^{-4},\\ d_\triangledown&\approx1.99980\times 10^{-4} \end{cases}$ 
+		\\ \hline
+		\multirow{1}{*}{\textbf{\texttt{n=10000}}}
+		&$\begin{cases}x_\vartriangle&=1.6448340718481,\\x_\triangledown&=1.6448340718481\end{cases}$ 
+		&$\begin{cases}d_\vartriangle&\approx9.99950\times10^{-5},\\ d_\triangledown&\approx9.99950\times10^{-5} \end{cases}$ 
+		\\\hline
+		\multirow{1}{*}{\textbf{\texttt{n=100000}}}
+		&$\begin{cases}x_\vartriangle&=1.6449240668982,\\x_\triangledown&=1.6449240668982\end{cases}$ 
+		&$\begin{cases}d_\vartriangle&\approx9.99994\times10^{-6},\\ d_\triangledown&\approx9.99994\times10^{-6}\end{cases}$ \\
+		\hline
+		\multirow{2}{*}{$\begin{matrix}\texttt{n=4.294.967.295} \\ \text{máximo\cod{unsigned int }}\end{matrix}$}
+		&$\begin{cases}x_\vartriangle&=1.6449340578346,\\x_\triangledown&=1.6449340666154\end{cases}$ 
+		&$\begin{cases}d_\vartriangle&\approx9.01365\times10^{-9},\\ d_\triangledown&\approx2.32830\times10^{-10} \end{cases}$ \\
+		&&\\
+		\hline
+	\end{tabular}
+	\normalsize
+	\caption{ \footnotesize Resultados obtenidos con \cod{ex4\_ab\_fd}. Notación: $\vartriangle$ indica orden creciente, $\triangledown$ indica orden decreciente. $x_{orden}$ indica valor de la suma, $d_{orden}$ indica diferencia con valor de enunciado (7 o 14 decimales).}
+	\label{tab:ex4}
+\end{table}
+Observamos que con precisión simple,  es decir con el uso de \cod{float} , el resultado mejora si se suma en orden decreciente(comenzando por termino enésimo). Con las dos precisiones vemos que al aumentar $n$ la diferencia disminuye, en \cod{float} la mejora colapsa en n=10000 o antes, en \cod{double} mejora hasta el máximo permitido por el programa realizado; con un total de 9 decimales correctos. Estás diferencias se explican ja que la suma en \textbf{aritmética de punto flotante} no es asociativa, al igual que las otras operaciones. 
+\subsection{Apartado d}
+Consideramos la siguiente serie que sabemos por criterio de Leibniz que es convergente y procedemos a manipular-la:
+$2\cdot \sum^{\infty}_{n=1}\frac{(-1)^{n+1}}{n^2}$ $=\sum^{\infty}_{n=1}\frac{2}{n^2}+\sum^{\infty}_{n=1}\frac{-2}{(2n)^2}$ $=\sum^{\infty}_{n=1}\frac{4-2}{2 \cdot n^2}$ $=\sum^{\infty}_{n=1}\frac{2}{2 \cdot n^2}$. Probada la igualdad implementamos en \cod{C} la nueva re-formulación de la serie en los dos ordenes (creciente y decreciente). Compilamos y ejecutamos la  nueva versión del código \cod{ex4\_abd\_fd.c} y obtenemos: para \cod{float} y 5000 términos la diferencia queda por $10^{-7}$, llegando al máximo de precisión para \cod{float}. Para \cod{double} con 5000 términos tenemos $d_\vartriangle \approx d_\triangledown = 3.999\cdot10^{-8}$ y;con 10000
+$d_\vartriangle \approx d_\triangledown = 3.999\cdot10^{-9}$; con $n=100000$ $d_\vartriangle \approx d_\triangledown = 3.999\cdot10^{-10}$. Y finalmente en poco más de 2 minutos con n=4.294.967.295 conseguimos 15 decimales correctos con $d_\triangledown\approx4.44\cdot10^{-16}$. Obtenemos $x_\triangledown=1.644934066848226$. \footnote{Mirar \cod{Resultados\_4d.txt}}
+\section{Quinto ejercicio}
+\subsection{Apartado a, b y c}
+\begin{proof}
+	~Sea $p=\frac{(a+b+c)}{2}$ y $A=\sqrt{p(p-a)(p-b)(p-c)}$. Suponemos que $a \approx b+c$, entonces:
+	\small
+	$$
+	A=\sqrt{p\frac{(a+b+c-2a)}{2}(p-b)(p-c)} \approx \sqrt{\frac{p}{2}(2a-2a)(p-b)(p-c)}=0
+	$$
+	\normalsize
+	Observamos un claro error de cancelación suponiendo condiciones.
+\end{proof}
+Si consideramos\footnote{
+	$A=\frac{1}{4}\sqrt{(a+(b+c))(c-(a-b))(c+(a-b))(a+(b-c)}$}
+\footnote{Nótese que con este \textit{orden } evitamos que las operaciones generen un error de cancelación, es la fórmula de Heron re-adaptada. } y sin el cumplimiento de la propiedad asociativa, con $a \leq b \leq c$.  Por Ejemplo $T_1=(10^{8},10^{8},0.01)$ o $T_2=(10^{7},10^{7},2)$ Si introducimos estos valores en \cod{ex5\_bc\_fd} obtenemos para fórmula inicial {\color{red!80!black!80}0.0000000} y  499999.52, para fórmula alternativa {\color{green!60!black!90}500000.00} y  499999.99; para \cod{float} y \cod{double} respectivamente. Observamos que se {\color{green!60!black!90} corrigen} (en verde) los {\color{red!80!black!80}errores de cancelación }(en rojo).

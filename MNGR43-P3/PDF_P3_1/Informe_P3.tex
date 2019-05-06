@@ -1,0 +1,251 @@
+\documentclass[paper=a4, spanish, fontsize=12pt]{scrartcl}
+ 
+%Paquets d'idioma i codificació de caràcters
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+
+%Paquets d'escriptura matemàtica
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+%Modificacions i noves comandes
+\renewcommand\qedsymbol{QED} %Canviem el símbol de demostració final  de un quadrat en blanc a QED 
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\B}{\ensuremath{\mathcal{B}}}
+\newcommand{\esp}{\text{ }}
+\newcommand{\cod}[1]{{ \color{redviolet}\texttt{#1}}}
+
+
+%Paquets de plantilla per pràctiques
+\usepackage{fourier} 
+\usepackage{paralist}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{titling}
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{fancyhdr} % Custom headers and footers
+\usepackage{wrapfig}
+%Altres paquets
+
+\usepackage[svgnames]{xcolor}
+\usepackage{multirow} %Serveix per agrupar files i columnes
+\usepackage{graphicx} %Serveix per introduir imatges
+\usepackage{url} % the same
+\usepackage{hyperref} %Serveix per que totes les referències que apareguin en el document pdf clicant-hi amb el ratolí, el visor pdf saltarà a la posició referenciada
+\usepackage{enumerate,paralist} %Serveix per ampliar les possibilitats dels entorns de llistes
+\usepackage{subfigure} %Serveix per poder generat subfigures.
+\usepackage{pstricks-add} %Paquets per a dibuixos amb GeoGebra
+\usepackage{centernot} %Serveix taxar coses bé com per exemple $\longrightarrow$ i $\exists$
+\usepackage{colortbl} %Serveix per ficar colors a les taules
+\usepackage{fancyhdr} %Serveix per fer el estil de capselera
+\usepackage{stackrel} %Serveix per fotre coses a dalt i a baix
+\usepackage{tcolorbox}% Serveix per ficar caixes 
+
+%Altres dades del document
+\pagestyle{fancy}
+\definecolor{mygray}{rgb}{0.9,0.9,0.9} % Color definition
+\definecolor{redviolet}{RGB}{5,47,75} 
+\definecolor{leet}{RGB}{4,4,75}
+\spanishdecimal{.}
+\usepackage[all]{xy}
+
+
+
+% Autores y su correspondiente correo
+\author{Práctica 3 (Interpolación e integración númerica), Métodos numéricos } % Your names
+\date{\normalsize} 
+\rhead{ \small \theauthor}
+
+\setcounter{section}{-1}
+\begin{document}
+\begin{tcolorbox}
+	{\large\textbf{Práctica 3}}, {\textbf{Interpolación} \small \textbf{(Parte 1)}}  \hfill Fecha de Reporte: \textbf{05/05/2019}\\
+	\textbf{Métodos numéricos}  \hfill Alumno: \emph{Graells Ricardo, Marc}\\
+	2n curso del grado en Matemáticas
+	\hfill (\textbf{\texttt{NIU:} }\textit{1388471})
+\end{tcolorbox}	
+\section{Resumen}
+En el presente documento se comentan las soluciones a los ejercicios  propuestos en las sesiones de \textit{Seminarios de Métodos Numéricos} de los días 1, 24 y 29 de Abril. Los ficheros \texttt{.c} con las implementaciones del código en lenguaje C se adjuntan tal como se detalla en documento del mismo subdirectorio \texttt{README.txt}.\footnote{Esta práctica está dividida en dos partes, la primera y presente, trata sobre interpolación numérica; la segunda parte esta dedicada a integración numérica.}
+\footnotesize
+%\tableofcontents
+\normalsize
+\section{Primer problema}
+\subsection{Apartado a y b}
+Consideramos la función definida a trozos del enunciado:
+\footnotesize
+$$
+f(x)=\begin{cases}
+-1 \quad \text{ si } \quad -1 \leq x \leq -0.7 \text{ ,} \\
+ \esp \esp \esp 1 \quad \text{ si } \quad -0.7 < x \leq 0.7 \text{ ,} \\
+-1 \quad \text{ si } \quad 0.7 \leq x \leq 1 \text{.} \\
+\end{cases}
+$$
+\normalsize
+Si observamos la Figura \ref{fig:01} podemos ver una sobre-posición de los valores de la función con las diferentes aproximaciones mediante polinomios interpoladores de Lagrange para 4,8,16 y 32 nodos.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=4.2in]{Problem_1_f.pdf}
+	\caption
+	{ \footnotesize Gráfico de $P_f(x_k)$ como función de $x_k=-0989+k\cdot 0.011$  para $k=0,\cdots,180$, generado con \textit{gnuplot}.}
+	\label{fig:01}
+\end{figure}
+
+La Tabla \ref{tab:pr1} da valores a los errores máximos de $|f(x_k)-P_f(x_k)|$ para una \textit{malla de puntos} $x_k$, $k=0,\cdots,180$. Donde $P_f $ denota el polinomio interpolador de Lagrange de grado enésimo. 
+
+\begin{table}[ht]
+	\small
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		número de nodos & \cod{n=4} &\cod{n=8} &\cod{n=16} &\cod{n=32} \\
+		\hline
+		$\max{|f(x_k)-P_f(x_k)|}$ & 1.67816 & 1.90891 & 12.4074 & 1512.61\\
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos  para $\max{|f(x_k)-P_f(x_k)|}$, donde $x_k=-0989+k\cdot 0.011$, para $k=0, \cdots, 180$ mediante \cod{pr1\_ab\_d.c}}
+	\label{tab:pr1}
+	\normalsize
+\end{table}
+
+Elaborando un gráfico para $|f(x_k)-P_f(x_k)|$ como función de $x_k$  para $k=0,\cdots,180$, obtenemos Figura \ref{fig:02}. Observamos que al aumentar el número de nodos, los errores en el centro del intervalo de interpolación mejoran en $[-0.5,0.5]$. En cambio, los extremos, al aumentar el número de nodos, crecen de forma sustancial. Tanto es así, que el caso \cod{n=64}, no da valores coherentes. En los  casos \cod{n=16} \cod{n=32} ya obtenemos valores fuera de la gráfica (en los extremos). \footnote{Observamos que la linea dibujada  en el caso \cod{n=32} es aparentemente horizontal en $[-0.5,0.5]$}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=4.2in]{Problem_1.pdf}
+	\caption
+	{ \footnotesize Gráfico de $|f(x_k)-P_f(x_k)|$ como función de $x_k=-0989+k\cdot 0.011$  para $k=0,\cdots,180$, generado con \textit{gnuplot}.}
+	\label{fig:02}
+\end{figure}
+
+El motivo principal  de este hecho es que en contra de lo que nos podría dictar la \textit{intuición}, augmentar el número de nodos (equivalentemente aumentar el grado del polinomio interpolador) no tiene porque mejorar arbitrariamente la aproximación de la función. Es decir,   $P_f(x)\overset{n \to \infty}{\not\longrightarrow} f(x)$ en general.
+
+El comportamiento, observado de forma particular en este problema, es en esencia, que en augmentar el grado de un polinomio interpolador, aún en mejorar las aproximaciones en el centro del intervalo, los valores de los extremos de este \textit{empeoraron} drásticamente; equivalentemente aumenta el error en los extremos del polinomio que aproxima la función.
+Este hecho es típico en general para polinomios de grado \textit{elevado} con nodos equidistantes.
+
+ Este comportamiento de los polinomios de Lagrange está extensamente documentado y se conoce como \textbf{fenómeno de Runge}. \footnote{Véase \url{https://en.wikipedia.org/wiki/Runge\%27s_phenomenon}} Algunas de las soluciones a esta problemática pueden ser usar polinomios \textbf{spline} o elegir \textbf{nodos de Chebyshev} en vez de equidistantes.
+\section{Segundo problema}
+\subsection{Apartado a y b}
+Procediendo de forma análoga al Problema 1, con la misma \textit{malla de puntos} de abscisa con $x_k$. En la Tabla \ref{tab:p2} mostramos los valores máximos del valor absoluto de la diferencia entre la función \footnote{En este problema la función a interpolar es $f(x)=\frac{1}{1+25x^2}$ en el intervalo [-1,1].} que queremos aproximar y el polinomio interpolador usando \textit{nodos equidistantes} y \text{nodos de Chebyshev} para $n=4,8,16,32$. La Figura \ref{fig:03} y Figura \ref{fig:04}  son análogas a la Figura \ref{fig:02} del Problema 1.
+\begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		número de nodos & \cod{n=4} &\cod{n=8} &\cod{n=16} &\cod{n=32} \\
+		\hline
+		$\begin{matrix}\max{|f(x_k)-P_f(x_k)|} \\ \texttt{\footnotesize \color{gray}  con nodos equidistantes }\end{matrix}$ & 0.43833 & 1.04431 &14.3939 & 4905.45\\
+		\hline
+		$\begin{matrix}\max{|f(x_k)-P_f(x_k)|} \\ \texttt{\footnotesize \color{gray}  con nodos de  Chebyshev }\end{matrix}$ &0.401891  &0.170717 & 0.0325382&0.00139354 \\
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos  para $\max{|f(x_k)-P_f(x_k)|}$  para los dos tipos de nodos,mediante \cod{pr2\_ab\_d.c}}
+	\label{tab:p2}
+	\normalsize
+\end{table}
+\begin{figure}[ht]
+	\footnotesize
+	\centering
+	\includegraphics[width=4in]{Problem_2_Equi.pdf}
+	\caption
+	{ \footnotesize Gráfico de $|f(x_k)-P_f(x_k)|$ con nodos equidistantes, generado con \textit{gnuplot}.}
+	\label{fig:03}
+\end{figure}
+\begin{figure}[ht]
+	\footnotesize
+	\centering
+	\includegraphics[width=4in]{Problem_2_Chev.pdf}
+	\caption
+	{ \footnotesize Gráfico de $|f(x_k)-P_f(x_k)|$ con nodos de Chebyshev, generado con \textit{gnuplot}.}
+	\label{fig:04}
+\end{figure}
+Observamos pues que los \textbf{nodos de Chebyshev} solucionan la problemática del \textbf{fenómeno de Runge} que vuelve a repetirse para el caso de \textbf{nodos equidistantes}. La mejora que proporcionan los nodos de Chebyshev se basa en minimizar el valor del \textbf{polinomio de soporte} que interviene en la formula del error del polinomio interpolador. A la práctica esto se consigue haciendo una distribución de nodos concentrada en los extremos de la función a interpolar, que es precisamente donde se da el fenómeno de Runge para nodos equidistantes.
+\section{Tercer ejercicio}
+Mediante interpolación inversa de la función de Bessel de primer orden $J_0(x)$, obtenemos los siguientes valores para $x^*$ tal que $J_0(x^*)=0$ recogidos en Tabla \ref{tab:pr3}.
+\begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Polinomio de grado m & \cod{m=1} &\cod{m=3} &\cod{m=5}  \\
+		\hline
+		 $\begin{matrix}
+		 \texttt{\footnotesize \color{gray} \textbf{(a)} Para nodos  }\\ 
+		 \texttt{\footnotesize \color{gray} positivos más  }\\
+		 \texttt{\footnotesize \color{gray} proximos a cero }
+		 \end{matrix}$
+		 & 
+		 $\begin{matrix}
+		 \texttt{x*= 2.4049275130027}\\
+		 w(J_0(x^*))= 1.2133\times10^{-4}
+		 \end{matrix}$
+		 & 
+		 $\begin{matrix}
+		 \texttt{x*= 2.4048267504909}\\
+		 w(J_0(x^*))= 7.437\times10^{-7}
+		 \end{matrix}$
+		 & 
+		 $\begin{matrix}
+		 \texttt{x*= 2.4048256357895}\\
+		 w(J_0(x^*))= 2.7741\times10^{-8}
+		 \end{matrix}$\\
+		\hline
+		$\begin{matrix}
+		\texttt{\footnotesize \color{gray} \textbf{(b)} Para nodos  }\\ 
+		\texttt{\footnotesize \color{gray} negativos más  }\\
+		\texttt{\footnotesize \color{gray} proximos a cero }
+		\end{matrix}$
+		& 
+		$\begin{matrix}
+		\texttt{x*= 2.400077241947}\\
+		w(J_0(x^*))= 4.6838\times10^{-3} 
+		\end{matrix}$
+		& 
+		$\begin{matrix}
+		\texttt{x*=2.4041493753535 }\\
+		w(J_0(x^*))= 1.2346\times10^{-4} 
+		\end{matrix}$
+		& 
+		$\begin{matrix}
+		\texttt{x*= 2.4042167348682}\\
+		w(J_0(x^*))= 7.2016\times10^{-6}
+		\end{matrix}$\\
+		\hline
+		$\begin{matrix}
+		\texttt{\footnotesize \color{gray} \textbf{(c)} Para nodos  }\\ 
+		\texttt{\footnotesize \color{gray} simétricos más  }\\
+		\texttt{\footnotesize \color{gray} proximos a cero }
+		\end{matrix}$
+		& 
+		$\begin{matrix}
+		\texttt{x*= 2.4000772419471}\\
+		w(J_0(x^*))= 4.6838\times10^{-3} 
+		\end{matrix}$
+		& 
+		$\begin{matrix}
+		\texttt{x*= 2.4049448807768}\\
+		w(J_0(x^*))= 3.7056\times10^{-5}
+		\end{matrix}$
+		& 
+		$\begin{matrix}
+		\texttt{x*= 2.4048142556294}\\
+		w(J_0(x^*))= 7.5673\times10^{-7}
+		\end{matrix}$\\
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos  mediante \cod{pr3\_abc\_d.c}}
+	\label{tab:pr3}
+	\normalsize
+\end{table}
+ Sabiendo que $J_0(x)$ es estrictamente monótona y derivable, recordando además, la cota del Teorema de Error de interpolación de Lagrange tenemos que:
+\small
+$$
+\left|{J_0}^{ -1}\left(0\right)-P_{m}\left(0\right)\right| \leq \frac{\max\limits_{y \in I}\left|\underset{}{f^{(m+1)}\left(\xi(y)\right)}\right|}{(m+1)!}\left|\omega\left(0\right)\right|= \frac{\max\limits_{y \in I}\left|\underset{}{f^{(m+1)}\left(\xi(y)\right)}\right|}{(m+1)!}\left| \prod_{i=0}^{m}y_i\right|
+$$
+\normalsize
+Por tanto para $y$ fijado y $m$ fijado el error puede acotarse por el \textbf{polinomio de soporte} $\omega_m(y)=(y-y_0)\cdots(y-y_m)$.
+Observando ahora los valores que toma el polinomio de soporte recogidos en Tabla \ref{tab:pr3} son siempre mínimos en el caso \textbf{(a)} para los diferentes grados del polinomio interpolador. Por tanto esta es la mejor aproximación, es decir el caso \textbf{(a)}. De hecho, para \cod{m=5} el resultado  interpolando  con los valores positivos más cercanos a cero: $\texttt{\color{black!60}x*=\color{green!80!black!80} 2.404825\color{black!60}6357895}$, tiene siete cifras correctas.
+\end{document}

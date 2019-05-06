@@ -1,0 +1,106 @@
+\documentclass[paper=a4, spanish, fontsize=11pt]{scrartcl}
+ 
+%Paquets d'idioma i codificació de caràcters
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+
+%Paquets d'escriptura matemàtica
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+%Modificacions i noves comandes
+\renewcommand\qedsymbol{QED} %Canviem el símbol de demostració final  de un quadrat en blanc a QED 
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\B}{\ensuremath{\mathcal{B}}}
+\newcommand{\esp}{\text{ }}
+\newcommand{\cod}[1]{{ \color{redviolet}\texttt{#1}}}
+
+
+%Paquets de plantilla per pràctiques
+\usepackage{fourier} 
+\usepackage{paralist}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{titling}
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{fancyhdr} % Custom headers and footers
+
+%Altres paquets
+\usepackage[svgnames]{xcolor}
+\usepackage{multirow} %Serveix per agrupar files i columnes
+\usepackage{graphicx} %Serveix per introduir imatges
+\usepackage{url} % the same
+\usepackage{hyperref} %Serveix per que totes les referències que apareguin en el document pdf clicant-hi amb el ratolí, el visor pdf saltarà a la posició referenciada
+\usepackage{enumerate,paralist} %Serveix per ampliar les possibilitats dels entorns de llistes
+\usepackage{subfigure} %Serveix per poder generat subfigures.
+\usepackage{pstricks-add} %Paquets per a dibuixos amb GeoGebra
+\usepackage{centernot} %Serveix taxar coses bé com per exemple $\longrightarrow$ i $\exists$
+\usepackage{colortbl} %Serveix per ficar colors a les taules
+\usepackage{fancyhdr} %Serveix per fer el estil de capselera
+\usepackage{stackrel} %Serveix per fotre coses a dalt i a baix
+\usepackage{tcolorbox}% Serveix per ficar caixes 
+\usepackage{wasysym}
+%Altres dades del document
+\pagestyle{fancy}
+\definecolor{mygray}{rgb}{0.9,0.9,0.9} % Color definition
+\definecolor{redviolet}{RGB}{82,47,75}
+\definecolor{leet}{RGB}{4,4,75}
+\spanishdecimal{.}
+\usepackage[all]{xy}
+\renewcommand\thesubsection{\textit{\thesection}.\Roman{section}}
+
+% Autores y su correspondiente correo
+\author{Práctica 1 (Errores), Métodos numéricos, Memoria } % Your names
+\date{\normalsize\today} 
+\rhead{\theauthor}
+%Serveix per lletre inicial més elegant i vanidosa 
+\usepackage{erewhon}
+\usepackage{lipsum}
+\usepackage{lettrine}
+\usepackage{GoudyIn}
+\definecolor{redviolet}{RGB}{82,87,75}
+\usepackage{xcolor} 
+\renewcommand{\LettrineFontHook}{\color{redviolet}\GoudyInfamily{}}
+\setcounter{DefaultLines}{3}%
+\usepackage{listings}
+%\setcounter{section}{-1}
+\begin{document}
+\begin{tcolorbox}
+	{\large\textbf{Memoria de práctica 1, (Errores)}}  \hfill Fecha de Reporte: \textbf{11/03/2019} \\ 
+	\textbf{Métodos numéricos}  \hfill Alumno: \emph{Graells Ricardo, Marc}\\
+	2n curso del grado en Matemáticas
+	\hfill (\textbf{\texttt{NIU:} }\textit{1388471})
+\end{tcolorbox}
+%{$\begin{matrix}{\color{redviolet}\Large \ataribox}&\text{\Huge \color{redviolet}\textbf{Conclusiones}}\end{matrix}$ }
+\lettrine{E}n la práctica presente, tal como indica su título, se hace especial énfasis en los \emph{errores}, muchas veces algo sutiles, inherentes al uso de la \emph{aritmética en punto flotante} vista durante la primera semana del curso en la asignatura de \emph{Métodos Numéricos}. 
+\\
+$ \esp$
+ \par Recordando los conceptos fundamentales de programación en lenguaje \texttt{C} vistos en \textit{Eines Informàtiques per a les Matemàtiques} del primer curso; adquirimos practica y experiencia en los errores típicos que surgen al intentar implementar un algoritmo \emph{matemático} de forma finita mediante \emph{computación}. Además y de forma más relevante intentamos entender el \emph{porqué} de estos \emph{errores} y en ultima instancia conocer estrategias para solventarlos. Aquí sigue un resumen de lo aprendido por puntos para futuras consultas.
+\small
+\begin{enumerate}[I]
+	\item A la hora de usar funciones en \cod{C} hace falta saber con que precisiones trabaja cada una. Por ejemplo en el problema 1 y 2 se usan funciones \cod{sinf(), sqrtf()}  y \cod{sin(), sqrt()}; para trabajar con valores \cod{float} y \cod{double} respectivamente.
+	\item Las variables \cod{float} y \cod{double} de IEEE tienen una precisión limitada (es decir, no podemos esperar mayor precisión de la teórica  porqué no es posible, la representación en punto flotante, esta sujeta a los \emph{errores de representación}) relacionada con el concepto épsilon de máquina, que depende también de si la máquina \emph{trunca} o \emph{redondea}. Si suponemos el peor caso, la máquina redondea, podemos esperar errores relativos (entre el valor correcto y la aproximación numérica) por encima de  de \cod{1.19E-7} y \cod{2.22E-16}, respectivamente.
+	\item Los \emph{errores de cancelación} parecen ser muy frecuentes y antes de obtener una buena implementación conviene sospechar y repasar que no sean presentes. Aunque con un uso mayor de memoria pueden resultar mucho menos dañinos.
+	\item Con ejercicios 3, 4 y 5; fundamos la fe en que siempre parece haber una formulación más adiete, y que en ocasiones una implementación mejor puede ahorrar el uso de variables con más memoria. 
+	\item La aritmética en punto flotante no cumple la propiedad asociativa usual de las operaciones con números reales. Conviene recordar que cambiar el orden de algunos paréntesis o sumas pude mejorar notablemente el resultado obtenido. Ejercicios 3 y 5.
+	\item No conviene subestimar la dificultad de un algoritmo, aparentemente fácil en un entorno \emph{matemático ideal}, su implementación mediante métodos numéricos de forma plenamente satisfactoria puede ser algo muy laborioso. Un ejemplo de esto es el problema 5.
+	\item Recordando los casos fatales de \emph{Ariane 5}\footnote{\url{http://www-users.math.umn.edu/~arnold/disasters/ariane.html }} en 1996 y \emph{The Patriot Missile Failure}\footnote{\url{http://www-users.math.umn.edu/~arnold/disasters/patriot.html}} en 1991. Nos invitan a ser cautos a la hora de asegurar la fiabilidad de una implementación y nos animan a ser minuciosos  en la elaboración de estas.
+	\item Me ha hecho especial ilusión leer estas lineas de \texttt{texto} y las adjunto como motivación personal.
+	\scriptsize
+	\begin{lstlisting}[frame=single] 
+	                    ... 
+	En orden decrecirnte 1.644934066848226, difiere en 4.440892098500626E-16 .
+	Tiempo de calculo: 2.221285 minutos
+	\end{lstlisting}
+	
+	
+\end{enumerate}
+
+
+\end{document}
+
+	
