@@ -1,0 +1,134 @@
+\documentclass[paper=a4, spanish, fontsize=12pt]{scrartcl}
+ 
+%Paquets d'idioma i codificació de caràcters
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+
+%Paquets d'escriptura matemàtica
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+%Modificacions i noves comandes
+\renewcommand\qedsymbol{QED} %Canviem el símbol de demostració final  de un quadrat en blanc a QED 
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\B}{\ensuremath{\mathcal{B}}}
+\newcommand{\esp}{\text{ }}
+\newcommand{\cod}[1]{{ \color{redviolet}\texttt{#1}}}
+
+
+%Paquets de plantilla per pràctiques
+\usepackage{fourier} 
+\usepackage{paralist}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{titling}
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{fancyhdr} % Custom headers and footers
+\usepackage{wrapfig}
+%Altres paquets
+
+\usepackage[svgnames]{xcolor}
+\usepackage{multirow} %Serveix per agrupar files i columnes
+\usepackage{graphicx} %Serveix per introduir imatges
+\usepackage{url} % the same
+\usepackage{hyperref} %Serveix per que totes les referències que apareguin en el document pdf clicant-hi amb el ratolí, el visor pdf saltarà a la posició referenciada
+\usepackage{enumerate,paralist} %Serveix per ampliar les possibilitats dels entorns de llistes
+\usepackage{subfigure} %Serveix per poder generat subfigures.
+\usepackage{pstricks-add} %Paquets per a dibuixos amb GeoGebra
+\usepackage{centernot} %Serveix taxar coses bé com per exemple $\longrightarrow$ i $\exists$
+\usepackage{colortbl} %Serveix per ficar colors a les taules
+\usepackage{fancyhdr} %Serveix per fer el estil de capselera
+\usepackage{stackrel} %Serveix per fotre coses a dalt i a baix
+\usepackage{tcolorbox}% Serveix per ficar caixes 
+
+%Altres dades del document
+\pagestyle{fancy}
+\definecolor{mygray}{rgb}{0.9,0.9,0.9} % Color definition
+\definecolor{redviolet}{RGB}{5,47,75} 
+\definecolor{leet}{RGB}{4,4,75}
+\spanishdecimal{.}
+\usepackage[all]{xy}
+
+
+
+% Autores y su correspondiente correo
+\author{Práctica 3 (Interpolación e integración númerica), Métodos numéricos } % Your names
+\date{\normalsize} 
+\rhead{ \small \theauthor}
+
+\setcounter{section}{-1}
+\begin{document}
+\begin{tcolorbox}
+	{\large\textbf{Práctica 3}}, {\textbf{Integración numérica} \small \textbf{(Parte 2)}}  \hfill Fecha de Reporte: \textbf{07/05/2019}\\
+	\textbf{Métodos numéricos}  \hfill Alumno: \emph{Graells Ricardo, Marc}\\
+	2n curso del grado en Matemáticas
+	\hfill (\textbf{\texttt{NIU:} }\textit{1388471})
+\end{tcolorbox}	
+\section{Resumen}
+En el presente documento se comentan las soluciones a los ejercicios  propuestos en las sesiones de \textit{Seminarios de Métodos Numéricos} de los días 1, 24 y 29 de Abril. Los ficheros \texttt{.c} con las implementaciones del código en lenguaje C se adjuntan tal como se detalla en documento del mismo subdirectorio \texttt{README.txt}.\footnote{Esta práctica está dividida en dos partes, la primera, trata sobre interpolación numérica; la segunda parte, la presente, esta dedicada a integración numérica.}
+\footnotesize
+%\tableofcontents
+\normalsize
+\setcounter{section}{+3}
+\section{Cuarto problema}
+Implementado en  C  el método compuesto de los trapecio y el método compuesto basado en la regla de Simpson, y partir del calculo exacto de la integral\footnote{$\frac{\pi}{4}$.}, obtenemos los siguientes resultados que podemos ver en la Tabla 4.
+\begin{table}[ht]
+	\small
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Método&Trapecios&Simpson\\ 
+		\hline
+		\texttt{\color{gray}valor aproximado}&\texttt{0.7827941176}&\texttt{0.7853981256}\\
+		\hline 
+		\texttt{\color{gray}error aproximado}&$2.6040\times10^{-3}$&$3.7782\times10^{-8}$\\
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos  para $\int_{0}^{1}=\frac{1}{1+x^2}dx$ mediante \cod{pr4\_d.c} dividiendo [0,1] en 4 intervalos de igual longitud.}
+	\normalsize
+\end{table}
+Claramente el método de Simpson mejora la aproximación, como era de esperar.\footnote{Tal como se muestra en la fórmula del error el método de Simpson es $O(h^4)$, en cambio el método de los Trapecios es $O(h^2)$. }
+\section{Quinto problema}
+ En este caso el cálculo de la integral es más complicado. Pero por fórmulas del error y mediante el estudio gráfico de la segunda derivada,  podemos acotar el error absoluto a partir del máximo absoluto de esta\footnote{En [1,5]}. Es decir:
+ $$
+\left|\int_{1}^{5} \frac{e^x}{x}dx - T_{NI}(f,1,5) \right|\leq \left|\frac{(5-1) \max_{x \in [1,5]} f''(\xi(x))}{12} h^2\right|\approx 6.7280632\cdot h^2
+ $$
+donde $h=\frac{b-a}{\cod{NI}}$ dependerá de \cod{NI} número de intervalos (o número de nodos menos uno). Los resultados obtenidos se muestran en Tabla 5.
+\begin{table}[ht]
+	\small
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\texttt{\color{gray}número intervalos}&\texttt{\color{gray}valor aproximado}&\texttt{\color{gray} cota error estimado}\\
+		\hline
+		\cod{NI=4}&\texttt{40.2397013566}&$6.7281$\\
+		\hline
+		\cod{NI=8}&\texttt{{\color{green!80!black!80}38}.7829281563}&$1.6820$\\
+		\hline
+		\cod{NI=16}&\texttt{{\color{green!80!black!80}38}.4137113635}&$4.2050\times10^{-1}$\\
+		\hline
+		\cod{NI=32}&\texttt{{\color{green!80!black!80}38}.3210691623}&$1.0512\times10^{-1}$\\
+		\hline
+		\cod{NI=64}&\texttt{{\color{green!80!black!80}38.29}78869041}&$2.6281\times10^{-2}$\\
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos  para $\int_{1}^{5}=\frac{e^x}{x}dx$ mediante \cod{pr5\_d.c} dividiendo [1,5] en \cod{NI} intervalos de igual longitud.}
+	\normalsize
+\end{table}
+Observamos pues, que al aumentar \cod{NI}, las aproximaciones mejoran. Esto se puede prever  observando la dependencia del error absoluto al valor $h^2$ para un intervalo y función fijada.
+\section{Sexto problema}
+De nuevo, como en Problema 5, podemos acotar el error cometido, ya que el máximo en valor absoluto de  $f^{(4)}=\frac{-6}{x^4}$  en [1,2] es 6.
+ $$
+\left|\int_{1}^{2} log(x) dx - S_{NI}(f,1,2) \right|\leq \left|\frac{(2-1) \max_{x \in [1,2]} f^{(4)}(\xi(x))}{180} h^4\right|= \frac{1}{30}\cdot h^4
+$$
+Iterando el método de Simpson  observamos que dividiendo el intervalo en 2, es decir, con una única iteración, podemos garantizar un error menor a $10^{-2}$.
+\section{Séptimo problema}
+El séptimo problema se ha resuelto con ayuda de la regla compuesta de Simpson y el hecho de que tenemos un número par de intervalos de misma longitud, 15 nodos, 15-1 intervalos. La \textit{la gracia} esta en que no necesitamos saber la función de la velocidad, ya que solo necesitamos evaluar la función en los nodos (tiempos) que vienen dados por la tabla del enunciado.
+
+Mediante \cod{pr7\_d.c}, obtenemos un valor numérico aproximado para la longitud de la pista de carreras de 
+$L=2715.44$ metros.
+\end{document}

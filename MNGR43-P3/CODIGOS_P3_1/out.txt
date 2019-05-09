@@ -1,8 +1,8 @@
 .:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
-.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_1_[a]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_1_[a,b]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
 .:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
 
- Los coeficientes de las diferencias divididas de la diagonal con 4 nodos son
+ Los coeficientes de las diferencias divididas de la diagonal con 4+1 nodos son
 
 [0]------>-1
 [1]------>4
@@ -10,9 +10,9 @@
 [3]------>2.666666666666667
 [4]------>-2.666666666666667
 
- El valor maximo de |f(x_k)-P_f(x_k)| para 4 nodos es 1.67816
+ El valor maximo de |f(x_k)-P_f(x_k)| para 4+1 nodos es 1.67816
 
- Los coeficientes de las diferencias divididas de la diagonal con 8 nodos son
+ Los coeficientes de las diferencias divididas de la diagonal con 8+1 nodos son
 
 [0]------>-1
 [1]------>0
@@ -24,9 +24,9 @@
 [7]------>-45.51111111111111
 [8]------>45.51111111111111
 
- El valor maximo de |f(x_k)-P_f(x_k)| para 8 nodos es 1.90891
+ El valor maximo de |f(x_k)-P_f(x_k)| para 8+1 nodos es 1.90891
 
- Los coeficientes de las diferencias divididas de la diagonal con 16 nodos son
+ Los coeficientes de las diferencias divididas de la diagonal con 16+1 nodos son
 
 [0]------>-1
 [1]------>0
@@ -46,9 +46,9 @@
 [15]------>5650.273737455959
 [16]------>-5650.273737455959
 
- El valor maximo de |f(x_k)-P_f(x_k)| para 16 nodos es 12.4074
+ El valor maximo de |f(x_k)-P_f(x_k)| para 16+1 nodos es 12.4074
 
- Los coeficientes de las diferencias divididas de la diagonal con 32 nodos son
+ Los coeficientes de las diferencias divididas de la diagonal con 32+1 nodos son
 
 [0]------>-1
 [1]------>0
@@ -84,61 +84,61 @@
 [31]------>162762902.2875094
 [32]------>-162762902.2875094
 
- El valor maximo de |f(x_k)-P_f(x_k)| para 32 nodos es 1512.61
+ El valor maximo de |f(x_k)-P_f(x_k)| para 32+1 nodos es 1512.61
  
-
  
+ 
+ 
+ .:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_2_[a,b]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
 .:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
-.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_2_[a]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
-.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
 
-El valor maximo de |f(x_k)-P_f(x_k)| para 4 nodos equidistantes es 0.438333
-El valor maximo de |f(x_k)-P_f(x_k)| para 4 nodos de Chebyshev es 0.401891
+El valor maximo de |f(x_k)-P_f(x_k)| para 4+1 nodos equidistantes es 0.438333
+El valor maximo de |f(x_k)-P_f(x_k)| para 4+1 nodos de Chebyshev es 0.401891
 
-El valor maximo de |f(x_k)-P_f(x_k)| para 8 nodos equidistantes es 1.04431
-El valor maximo de |f(x_k)-P_f(x_k)| para 8 nodos de Chebyshev es 0.170717
+El valor maximo de |f(x_k)-P_f(x_k)| para 8+1 nodos equidistantes es 1.04431
+El valor maximo de |f(x_k)-P_f(x_k)| para 8+1 nodos de Chebyshev es 0.170717
 
-El valor maximo de |f(x_k)-P_f(x_k)| para 16 nodos equidistantes es 14.3939
-El valor maximo de |f(x_k)-P_f(x_k)| para 16 nodos de Chebyshev es 0.0325382
+El valor maximo de |f(x_k)-P_f(x_k)| para 16+1 nodos equidistantes es 14.3939
+El valor maximo de |f(x_k)-P_f(x_k)| para 16+1 nodos de Chebyshev es 0.0325382
 
-El valor maximo de |f(x_k)-P_f(x_k)| para 32 nodos equidistantes es 4905.45
-El valor maximo de |f(x_k)-P_f(x_k)| para 32 nodos de Chebyshev es 0.00139354
- 
+El valor maximo de |f(x_k)-P_f(x_k)| para 32+1 nodos equidistantes es 4905.45
+El valor maximo de |f(x_k)-P_f(x_k)| para 32+1 nodos de Chebyshev es 0.00139354
 
- 
- 
- .:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
 .:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_3_[a,b,c]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
 .:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
 
 Polinomios de grado 1, o 1+1 nodos:
 (a) Para nodos positivos mas proximos a cero:
-  x*= 2.404927513002775  w(J_0(x*))= 0.0001213311881
+  x*= 2.404728613882804  w(J_0(x*))= 0.0001392761898
 
 (b) Para nodos negativos mas proximos a cero:
   x*= 2.400077241947102  w(J_0(x*))= 0.004683789275
 
 (c) Para nodos simetricos mas proximos a cero:
-  x*= 2.400077241947102  w(J_0(x*))= 0.004683789275
+  x*= 2.404927513002775  w(J_0(x*))= 0.0001213311881
 
 
 Polinomios de grado 3, o 3+1 nodos:
 (a) Para nodos positivos mas proximos a cero:
-  x*= 2.404826750490918  w(J_0(x*))= 7.436990948E-07
+  x*= 2.404822718113948  w(J_0(x*))= 2.560888577E-06
 
 (b) Para nodos negativos mas proximos a cero:
-  x*= 2.404149375353531  w(J_0(x*))= 0.0001234565654
+  x*= 2.404149375353532  w(J_0(x*))= 0.0001234565654
 
 (c) Para nodos simetricos mas proximos a cero:
-  x*= 2.404944880776838  w(J_0(x*))= 3.705630145E-05
+  x*= 2.404824021911155  w(J_0(x*))= 6.523403239E-07
 
 
 Polinomios de grado 5, o 5+1 nodos:
 (a) Para nodos positivos mas proximos a cero:
-  x*= 2.404825635789562  w(J_0(x*))= 2.774129008E-08
+  x*= 2.40482529478546  w(J_0(x*))= 1.615833028E-07
 
 (b) Para nodos negativos mas proximos a cero:
-  x*= 2.404216734868257  w(J_0(x*))= 7.20154936E-06
+  x*= 2.404216734868259  w(J_0(x*))= 7.20154936E-06
 
 (c) Para nodos simetricos mas proximos a cero:
-  x*= 2.404814255629488  w(J_0(x*))= 7.567265875E-07
+  x*= 2.404825653043717  w(J_0(x*))= 1.025546533E-08

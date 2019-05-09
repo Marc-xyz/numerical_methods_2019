@@ -1,0 +1,75 @@
+Buenas días Susana,
+
+Quería comentarte que hay algunos errores bastante graves en
+la práctica 3 de la entrega de interpolación.
+
+1-En el documento constantemente hago referencia al número de nodos
+,y aunque en algunos casos pongo el número de nodos en otra tipografía
+,hay una desfase de una unidad.
+
+En sentencias como "... de Lagrange para 4,8,16 y 32 nodos."  se ve
+un claro error, ya que debería poner "...4+1,8+1,16+1,32+1."
+Esto pasa tanto en el problema 1 como en el 2.
+
+2-Otro error, esta vez en el código esta en las lineas 32 a 34 de pr3_abc_d.c .
+Se definen tres vectores con los indices que hay que considerar
+y estos derivan ser:
+
+ unsigned int a[6]={5,4,3,2,1,0}, //Valores para apartado a
+                     b[6]={6,7,8,9,10,11}, //Valores para apartado b
+                     c[6]={5,6,4,7,3,8}; //Valores para apartado c
+
+en vez de:
+
+unsigned int a[7]={6,5,4,3,2,1.0}, //Valores para apartado a
+                    b[7]={7,6,8,9,10,11,0}, //Valores para apartado b
+                    c[7]={6,7,4,8,3,9,0}; //Valores para apartado c
+
+El motivo de esta componente de  más es la función Dif_Div_New() que no supe solucionar. De hecho esta mal implementada, ya que en los dos "for"s se itera hasta j<=n+2 y i<=n+2 (líneas 90 y 93), y debería poner <n+1. Ya que la matriz que se crea ya esta indexada con primer valor cero y por tanto no tiene sentido considerar la fila o columna de indice n+2. Aunque esto no da ningún error en los códigos de los problemas  1 y 2; ya que el valor para n+2 esta definido
+a pesar de que no se utilicen en los cálculos posteriores.
+
+En cambio en el problema 3 si los vectores tienen 6 componentes, aún compilar, no se ejecuta bien ya que  al "llamar" a la función Dif_Div_New() en el caso de grado 5 se llama a la componente n+2-1=n+1 del vector apart[], y se da un segmentation fault, ya que se pide la componente "imposible" del vector.
+
+Lamento los errores y los comento con el único propósito de facilitar la corrección, entiendo que el código no esta bien.
+
+ En principio con esos dos cambios queda así:
+ 
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema_3_[a,b,c]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+Polinomios de grado 1, o 1+1 nodos:
+(a) Para nodos positivos mas proximos a cero:
+  x*= 2.404728613882804  w(J_0(x*))= 0.0001392761898
+
+(b) Para nodos negativos mas proximos a cero:
+  x*= 2.400077241947102  w(J_0(x*))= 0.004683789275
+
+(c) Para nodos simetricos mas proximos a cero:
+  x*= 2.404927513002775  w(J_0(x*))= 0.0001213311881
+
+
+Polinomios de grado 3, o 3+1 nodos:
+(a) Para nodos positivos mas proximos a cero:
+  x*= 2.404822718113948  w(J_0(x*))= 2.560888577E-06
+
+(b) Para nodos negativos mas proximos a cero:
+  x*= 2.404149375353532  w(J_0(x*))= 0.0001234565654
+
+(c) Para nodos simetricos mas proximos a cero:
+  x*= 2.404824021911155  w(J_0(x*))= 6.523403239E-07
+
+
+Polinomios de grado 5, o 5+1 nodos:
+(a) Para nodos positivos mas proximos a cero:
+  x*= 2.40482529478546  w(J_0(x*))= 1.615833028E-07
+
+(b) Para nodos negativos mas proximos a cero:
+  x*= 2.404216734868259  w(J_0(x*))= 7.20154936E-06
+
+(c) Para nodos simetricos mas proximos a cero:
+  x*= 2.404825653043717  w(J_0(x*))= 1.025546533E-08
+
+Gracias de antemano.
+Cordialmente.
+Marc.

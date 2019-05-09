@@ -29,9 +29,9 @@ int main(void)
 {
     cabecera();
     unsigned int i;
-    unsigned int a[7]={6,5,4,3,2,1.0}, //Valores para apartado a
-                 b[7]={7,6,8,9,10,11,0}, //Valores para apartado b
-                 c[7]={6,7,4,8,3,9,0}; //Valores para apartado c
+    unsigned int a[6]={5,4,3,2,1,0}, //Valores para apartado a
+                 b[6]={6,7,8,9,10,11}, //Valores para apartado b
+                 c[6]={5,6,4,7,3,8}; //Valores para apartado c
     double poli_coef[12];  
     double x_s[12]={ 1.9, 2.0, 2.1, 2.2, 2.3, 2.4,
                      2.5, 2.6, 2.7, 2.8, 2.9, 3.0};
@@ -87,10 +87,10 @@ double m[13][13]={{0}};
        }
        poli_coef[0]=x_s[apart[0]];
 //Generamos matriz diferencias divididas y guardamos valores de la diagonal
-     for(j=2;j<=n+2;j++)
+     for(j=2;j<=n+1;j++)
     {
         k=0;
-        for(i=j;i<=n+2;i++)
+        for(i=j;i<=n+1;i++)
         {
             m[i][j]=(m[i][j-1]-m[i-1][j-1])/(nodos[apart[i-1]]-nodos[apart[k]]);
             if(i==j)

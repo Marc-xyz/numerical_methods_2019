@@ -44,8 +44,8 @@ int main(void)
 {
     FILE *output, *outputt;
     double n;
-    double poli_coef[66]={0};
-    double nodos[66]={0};
+    double poli_coef[33]={0};
+    double nodos[33]={0};
     output=fopen("nodos_equi_02.dat","w");
     outputt=fopen("nodos_chev_02.dat","w");
     cabecera();
@@ -116,10 +116,10 @@ double m[66][66]={0};
        }
        poli_coef[0]=eval_f(nodos[0]);
 //Generamos matriz diferencias divididas y guardamos valores de la diagonal
-    for(j=2;j<=n+2;j++)
+    for(j=2;j<=n+1;j++)
     {
         k=0;
-        for(i=j;i<=n+2;i++)
+        for(i=j;i<=n+1;i++)
         {
             m[i][j]=(m[i][j-1]-m[i-1][j-1])/(nodos[i-1]-nodos[k]);
             if(i==j)
@@ -140,8 +140,8 @@ for(i=0;i<=n+1;i++)
             printf("%.10G," , m[i][j]);
         }
         printf("]");
+        printf("\n");
 }
-    printf("\n");
 */
     return 0;
 }
@@ -189,7 +189,7 @@ int poli_interp_chevy(double n, double nodos[], double poli_coef[])
 int plot_dat(double n, double nodos[], double poli_coef[], FILE *output, char *tipo)
 {
     double k, x_k, dif, max_dif=0;
-    fprintf(output,"# Numero de nodos n =%g \n", n);  
+    fprintf(output,"# Numero de nodos n =%g+1 \n", n);  
     fprintf(output,"# [k],[x_k],[f(x_k)],[P_f(x_k)],[|f(x_k)-P_f(x_k)|] \n");
     for(k=0;k<=180;k++)
         {
@@ -202,14 +202,14 @@ int plot_dat(double n, double nodos[], double poli_coef[], FILE *output, char *t
             fprintf(output,"%.10G %.10G %.10G %.10G %.10G\n", k,x_k,eval_f(x_k),eval_pf(x_k,n,nodos,poli_coef),dif);
         }
         fprintf(output,"\n\n");
-        printf("El valor maximo de |f(x_k)-P_f(x_k)| para %g nodos %s es %g\n",n,tipo,max_dif);
+        printf("El valor maximo de |f(x_k)-P_f(x_k)| para %g+1 nodos %s es %g\n",n,tipo,max_dif);
     return 0;
 }
 
 //(03) Función error
 void error(void)
 {
-   printf( "\n ERROR: Vaya alguna cosa ha salido mal. \n Prueve de introducir de nuevo los valor porfavor.\n" );
+   printf( "\n ERROR: Vaya alguna cosa ha salido mal. \n Prueve de introducir de nuevo los valor por favor.\n" );
    return ;
 }
 
@@ -217,7 +217,7 @@ void error(void)
 /* Esta función se puede ignorar solo produce la cabecera del programa, pero es agradable. */
 void cabecera(void)
 {
-    int i, j, n=70, m=18;
+    int i, j, n=70, m=20;
     for(j=1;j<=3;j++)
     {
        if(j==2)
@@ -226,7 +226,7 @@ void cabecera(void)
          {
              if(i==(n-m)/4) /*Aquí hacemos que cuando llegue a la posición deseada imprima el texto completo y modifique el contador */
              {
-                 printf("_#Problema_2_[a]__");
+                 printf("_#Problema_2_[a,b]__");
                  i=(n+m-4)/4;
              }
              else

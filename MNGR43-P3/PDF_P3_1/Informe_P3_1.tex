@@ -85,7 +85,7 @@ f(x)=\begin{cases}
 \end{cases}
 $$
 \normalsize
-Si observamos la Figura \ref{fig:01} podemos ver una sobre-posición de los valores de la función con las diferentes aproximaciones mediante polinomios interpoladores de Lagrange para 4,8,16 y 32 nodos.
+Si observamos la Figura \ref{fig:01} podemos ver una sobre-posición de los valores de la función con las diferentes aproximaciones mediante polinomios interpoladores de Lagrange para 4+1,8+1,16+1 y 32+1 nodos.
 
 \begin{figure}[ht]
 	\centering
@@ -102,7 +102,7 @@ La Tabla \ref{tab:pr1} da valores a los errores máximos de $|f(x_k)-P_f(x_k)|$ p
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		número de nodos & \cod{n=4} &\cod{n=8} &\cod{n=16} &\cod{n=32} \\
+		número de nodos & \cod{n=4+1} &\cod{n=8+1} &\cod{n=16+1} &\cod{n=32+1} \\
 		\hline
 		$\max{|f(x_k)-P_f(x_k)|}$ & 1.67816 & 1.90891 & 12.4074 & 1512.61\\
 		\hline
@@ -112,7 +112,7 @@ La Tabla \ref{tab:pr1} da valores a los errores máximos de $|f(x_k)-P_f(x_k)|$ p
 	\normalsize
 \end{table}
 
-Elaborando un gráfico para $|f(x_k)-P_f(x_k)|$ como función de $x_k$  para $k=0,\cdots,180$, obtenemos Figura \ref{fig:02}. Observamos que al aumentar el número de nodos, los errores en el centro del intervalo de interpolación mejoran en $[-0.5,0.5]$. En cambio, los extremos, al aumentar el número de nodos, crecen de forma sustancial. Tanto es así, que el caso \cod{n=64}, no da valores coherentes. En los  casos \cod{n=16} \cod{n=32} ya obtenemos valores fuera de la gráfica (en los extremos). \footnote{Observamos que la linea dibujada  en el caso \cod{n=32} es aparentemente horizontal en $[-0.5,0.5]$}
+Elaborando un gráfico para $|f(x_k)-P_f(x_k)|$ como función de $x_k$  para $k=0,\cdots,180$, obtenemos Figura \ref{fig:02}. Observamos que al aumentar el número de nodos, los errores en el centro del intervalo de interpolación mejoran en $[-0.5,0.5]$. En cambio, los extremos, al aumentar el número de nodos, crecen de forma sustancial. Tanto es así, que el caso \cod{n=64+1}, no da valores coherentes. En los  casos \cod{n=16+1} \cod{n=32+1} ya obtenemos valores fuera de la gráfica (en los extremos). \footnote{Observamos que la linea dibujada  en el caso \cod{n=32+1} es aparentemente horizontal en $[-0.5,0.5]$}
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=4.2in]{Problem_1.pdf}
@@ -129,13 +129,13 @@ Este hecho es típico en general para polinomios de grado \textit{elevado} con no
  Este comportamiento de los polinomios de Lagrange está extensamente documentado y se conoce como \textbf{fenómeno de Runge}. \footnote{Véase \url{https://en.wikipedia.org/wiki/Runge\%27s_phenomenon}} Algunas de las soluciones a esta problemática pueden ser usar polinomios \textbf{spline} o elegir \textbf{nodos de Chebyshev} en vez de equidistantes.
 \section{Segundo problema}
 \subsection{Apartado a y b}
-Procediendo de forma análoga al Problema 1, con la misma \textit{malla de puntos} de abscisa con $x_k$. En la Tabla \ref{tab:p2} mostramos los valores máximos del valor absoluto de la diferencia entre la función \footnote{En este problema la función a interpolar es $f(x)=\frac{1}{1+25x^2}$ en el intervalo [-1,1].} que queremos aproximar y el polinomio interpolador usando \textit{nodos equidistantes} y \text{nodos de Chebyshev} para $n=4,8,16,32$. La Figura \ref{fig:03} y Figura \ref{fig:04}  son análogas a la Figura \ref{fig:02} del Problema 1.
+Procediendo de forma análoga al Problema 1, con la misma \textit{malla de puntos} de abscisa con $x_k$. En la Tabla \ref{tab:p2} mostramos los valores máximos del valor absoluto de la diferencia entre la función \footnote{En este problema la función a interpolar es $f(x)=\frac{1}{1+25x^2}$ en el intervalo [-1,1].} que queremos aproximar y el polinomio interpolador usando \textit{nodos equidistantes} y \text{nodos de Chebyshev} para $n=4+1,8+1,16+1,32+1$. La Figura \ref{fig:03} y Figura \ref{fig:04}  son análogas a la Figura \ref{fig:02} del Problema 1.
 \begin{table}[ht]
 	\footnotesize
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		número de nodos & \cod{n=4} &\cod{n=8} &\cod{n=16} &\cod{n=32} \\
+		número de nodos & \cod{n=4+1} &\cod{n=8+1} &\cod{n=16+1} &\cod{n=32+1} \\
 		\hline
 		$\begin{matrix}\max{|f(x_k)-P_f(x_k)|} \\ \texttt{\footnotesize \color{gray}  con nodos equidistantes }\end{matrix}$ & 0.43833 & 1.04431 &14.3939 & 4905.45\\
 		\hline
@@ -179,18 +179,18 @@ Mediante interpolación inversa de la función de Bessel de primer orden $J_0(x)$,
 		 \end{matrix}$
 		 & 
 		 $\begin{matrix}
-		 \texttt{x*= 2.4049275130027}\\
-		 w(J_0(x^*))= 1.2133\times10^{-4}
+		 \texttt{x*= 2.4047286138828}\\
+		 w(J_0(x^*))= 1.3927\times10^{-4}
 		 \end{matrix}$
 		 & 
 		 $\begin{matrix}
-		 \texttt{x*= 2.4048267504909}\\
-		 w(J_0(x^*))= 7.437\times10^{-7}
+		 \texttt{x*= 2.4048227181139}\\
+		 w(J_0(x^*))= 2.5608\times10^{-6}
 		 \end{matrix}$
 		 & 
 		 $\begin{matrix}
-		 \texttt{x*= 2.4048256357895}\\
-		 w(J_0(x^*))= 2.7741\times10^{-8}
+		 \texttt{x*= 2.404825294785}\\
+		 w(J_0(x^*))= 1.6158\times10^{-7}
 		 \end{matrix}$\\
 		\hline
 		$\begin{matrix}
@@ -200,18 +200,18 @@ Mediante interpolación inversa de la función de Bessel de primer orden $J_0(x)$,
 		\end{matrix}$
 		& 
 		$\begin{matrix}
-		\texttt{x*= 2.400077241947}\\
-		w(J_0(x^*))= 4.6838\times10^{-3} 
+		\texttt{x*= 2.4000772419471}\\
+		w(J_0(x^*))= 4.6837\times10^{-3} 
 		\end{matrix}$
 		& 
 		$\begin{matrix}
-		\texttt{x*=2.4041493753535 }\\
-		w(J_0(x^*))= 1.2346\times10^{-4} 
+		\texttt{x*= 2.4041493753535}\\
+		w(J_0(x^*))= 1.2345\times10^{-4} 
 		\end{matrix}$
 		& 
 		$\begin{matrix}
 		\texttt{x*= 2.4042167348682}\\
-		w(J_0(x^*))= 7.2016\times10^{-6}
+		w(J_0(x^*))= 7.2015\times10^{-6}
 		\end{matrix}$\\
 		\hline
 		$\begin{matrix}
@@ -221,18 +221,18 @@ Mediante interpolación inversa de la función de Bessel de primer orden $J_0(x)$,
 		\end{matrix}$
 		& 
 		$\begin{matrix}
-		\texttt{x*= 2.4000772419471}\\
-		w(J_0(x^*))= 4.6838\times10^{-3} 
+		\texttt{x*= 2.4049275130027}\\
+		w(J_0(x^*))= 1.2133\times10^{-4} 
 		\end{matrix}$
 		& 
 		$\begin{matrix}
-		\texttt{x*= 2.4049448807768}\\
-		w(J_0(x^*))= 3.7056\times10^{-5}
+		\texttt{x*= 2.4048240219111}\\
+		w(J_0(x^*))= 6.5234\times10^{-7}
 		\end{matrix}$
 		& 
 		$\begin{matrix}
-		\texttt{x*= 2.4048142556294}\\
-		w(J_0(x^*))= 7.5673\times10^{-7}
+		\texttt{x*=2.4048256530437}\\
+		w(J_0(x^*))= 1.0255\times10^{-8}
 		\end{matrix}$\\
 		\hline
 	\end{tabular}
@@ -247,5 +247,5 @@ $$
 $$
 \normalsize
 Por tanto para $y$ fijado y $m$ fijado el error puede acotarse por el \textbf{polinomio de soporte} $\omega_m(y)=(y-y_0)\cdots(y-y_m)$.
-Observando ahora los valores que toma el polinomio de soporte recogidos en Tabla \ref{tab:pr3} son siempre mínimos en el caso \textbf{(a)} para los diferentes grados del polinomio interpolador. Por tanto esta es la mejor aproximación, es decir el caso \textbf{(a)}. De hecho, para \cod{m=5} el resultado  interpolando  con los valores positivos más cercanos a cero: $\texttt{\color{black!60}x*=\color{green!80!black!80} 2.404825\color{black!60}6357895}$, tiene siete cifras correctas.
+Observando ahora los valores que toma el polinomio de soporte recogidos en Tabla \ref{tab:pr3} son siempre mínimos en el caso \textbf{(c)} para los diferentes grados del polinomio interpolador. Por tanto esta es la mejor aproximación, es decir el caso \textbf{(c)}. De hecho, para \cod{m=5} el resultado  interpolando  con los valores positivos más cercanos a cero: $\texttt{\color{black!60}x*=\color{green!80!black!80} 2.404825\color{black!60}653043717}$, tiene siete cifras correctas.
 \end{document}

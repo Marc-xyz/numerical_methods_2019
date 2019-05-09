@@ -43,14 +43,14 @@ int main(void)
 //Generamos polinomios;
         if(gen_nodos(n,nodos)!=0){error(); return -1;};
         if(Dif_Div_New(n,nodos,poli_coef)!=0){error(); return -1;}
-        printf("\n Los coeficientes de las diferencias divididas de la diagonal con %g nodos son\n",n);
+        printf("\n Los coeficientes de las diferencias divididas de la diagonal con %g+1 nodos son\n",n);
         for(i=0;i<=n;i++)/*Con el único fin de tener una referencia de como son los coeficientes */
         {
             printf("\n[%u]------>%.16G",i,poli_coef[i]);
         }
         printf("\n");
 //Guardamos los valores para las gráficas
-        fprintf(output,"# Numero de nodos n =%g \n", n);
+        fprintf(output,"# Numero de nodos n+1 =%g \n", n);
         fprintf(output,"# [k],[x_k],[f(x_k)],[P_f(x_k)],[|f(x_k)-P_f(x_k)|] \n");
         for(k=0;k<=180;k++)
         {
@@ -63,7 +63,7 @@ int main(void)
             fprintf(output,"%.10G %.10G %.10G %.10G %.10G\n", k,x_k,eval_f(x_k),eval_pf(x_k,n,nodos,poli_coef),dif);
         }
         fprintf(output,"\n\n");
-	printf("\n El valor maximo de |f(x_k)-P_f(x_k)| para %g nodos es %g\n",n,max_dif);
+	printf("\n El valor maximo de |f(x_k)-P_f(x_k)| para %g+1 nodos es %g\n",n,max_dif);
         n=n*2;
     }
     fclose(output);
@@ -114,10 +114,10 @@ double m[66][66]={{0}};
        }
        poli_coef[0]=eval_f(nodos[0]);
 //Generamos matriz diferencias divididas y guardamos valores de la diagonal
-    for(j=2;j<=n+2;j++)
+    for(j=2;j<=n+1;j++)
     {
         k=0;
-        for(i=j;i<=n+2;i++)
+        for(i=j;i<=n+1;i++)
         {
             m[i][j]=(m[i][j-1]-m[i-1][j-1])/(nodos[i-1]-nodos[k]);
             if(i==j)
@@ -176,7 +176,7 @@ void error(void)
 /* Esta función se puede ignorar solo produce la cabecera del programa, pero es agradable. */
 void cabecera(void)
 {
-    int i, j, n=70, m=18;
+    int i, j, n=70, m=20;
     for(j=1;j<=3;j++)
     {
        if(j==2)
@@ -185,7 +185,7 @@ void cabecera(void)
          {
              if(i==(n-m)/4) /*Aquí hacemos que cuando llegue a la posición deseada imprima el texto completo y modifique el contador */
              {
-                 printf("_#Problema_1_[a]__");
+                 printf("_#Problema_1_[a,b]__");
                  i=(n+m-4)/4;
              }
              else

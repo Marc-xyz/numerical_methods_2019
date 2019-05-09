@@ -1,0 +1,52 @@
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema___[4]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+Calculo mediante metodo compuesto de los Trapecios
+La integral es aproximadamente 0.7827941176470589
+El error aproximado es de 0.002604045750389417
+
+Calculo mediante metodo compuesto de Simpson
+La integral es aproximadamente 0.7853981256146766
+El error aproximado es de 3.778277168908772E-08
+
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:_#Problema___[5]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+Calculo mediante metodo compuesto de los Trapecios
+ Para (4) intervalos:
+La integral es aproximadamente 40.23970135663446
+Una cota superior para el error esperado es: 6.7280632
+
+ Para (8) intervalos:
+La integral es aproximadamente 38.7829281563148
+Una cota superior para el error esperado es: 1.6820158
+
+ Para (16) intervalos:
+La integral es aproximadamente 38.41371136353941
+Una cota superior para el error esperado es: 0.42050395
+
+ Para (32) intervalos:
+La integral es aproximadamente 38.32106916233212
+Una cota superior para el error esperado es: 0.10512599
+
+ Para (64) intervalos:
+La integral es aproximadamente 38.2978869041288
+Una cota superior para el error esperado es: 0.026281497
+
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:__#Problema__[6]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+Calculo mediante metodo compuesto de Simpson
+La integral es aproximadamente 0.386259562814567
+El error aproximado es de 0.002083333333333333
+En iteracion numero 1
+
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:__#Problema__[7]__.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.
+
+La pista tiene una Longitud aproximada de 2715.44 metros
+
