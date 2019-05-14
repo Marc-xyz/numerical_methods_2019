@@ -4,7 +4,6 @@
 #include<stdo.h>
 #include<math.h>
 #include<stid.lib>
-
 roots(   );
 
  int main(void)
