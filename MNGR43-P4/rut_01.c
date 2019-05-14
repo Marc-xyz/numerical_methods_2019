@@ -1,39 +1,118 @@
+/*
+  Compilar con  nivel de optimización 3  
+  gcc -g -Wall -O3 -o rut_01 rut_01.c -lm
+  Compilar con  sintaxis standard ANSI C del 1990
+  gcc -g -Wall -pedantic -o rut_01 rut_01.c -lm
+*/
+
+//Librerías y definiciones 
 #include<stdio.h>
 #include<math.h>
- 
-//Lema polinomio ortogonal --> todas raices simples, reales, y en (a,b).
-//Conocemos número de soluciones y por tanto el número de intervalos (multip=1)
-//Primero c
-//localizar intervalos de cambio de signo 
-//
+#define N  //GRADO POLINOMIO MAXIMO
+#define TOL 100  //
+
+
+#define F(x) (exp(-x*x)) //FUNCION A INTEGRAR UNO
+/*#define G(x)*/ 
+
+
+//Funcion que implementan el algoritmo del Método de Newton en precisión doble.
+ double metNewd(double x);
+
+
+//Función que evalua el polinomio de Legendre enésimo para x.
+ double polin_Legndr(double n,double x);
+//Función que evalua la derivada del polinomio de Legendre enésimo para x.
+ double d_polin_Legndr(double n,double x);
+//Funcion que calcula los coeficientes de P(x) de Legendre.
+ double coefi_Legndr(double i);
+
+
+//Función que evalua el polinomio de Chebyshev enésimo para x.
+ double polin_Cheby(double n,double x);
+//Función que evalua la derivada del polinomio de Chebyshev enésimo para x.
+ double d_polin_Chevy(double n, double x);
+//Funcion que calcula los coeficientes de P(x) de Chebyshev.
+ double coefi_Chevy(double i);
+
+	
+/*Comentarios teoricos
+ * Lema polinomio ortogonal --> todas raices simples, reales, y en (a,b).
+ * Conocemos número de soluciones y por tanto el número de intervalos (multip=1)
+ * Localizar intervalos de cambio de signo 
+*/
+
+/********************************************************************
+ *                                                                  *
+ *                   ACTUALMENTE EDITANDO                           *
+ *                   INCI:05/06/07                                  *
+ *                   NOTES:                                         *
+ *                   *USE LONG LONG FLOAT                           *
+ *                   *POLINOM[L,C]                                  *
+ *                   *COEFI a_i                                     *
+ *                   *SUMA FINAL DECRECIENTE                        *
+ *                   *PONER COTA ERROR  			    *
+ ********************************************************************/
+
+//Función principal
+int main(void)
+ {
+     /*********************Vectores:*********************** 
+      *         *Delimitadores intervalos,                *
+      *         *Itervalos con almenos una raiz           *
+      *         *Raices                                   *
+      **************************************************** */
+     double points[TOL], I_roots[2*(N)], roots[N];
+
+     /***********************Valores************************
+      *          *Intervalo [a,b]=[-1,1]                   *
+      *          *Pivote 1 y 2                             *
+      *          *                                          *
+      ******************************************************/
+     double a=-1.0,b=1, x_i, x_ii, sum;
+     unsigned int j, i,  m=-1, I=-1; //contador de raices, numero de intervalos por dos
+    /*cabezera del progrma*/
+   for(o=2;o<=N;o+=2)
+   {
+    /*Generamos intervalos*/   
+     for(j=0;j<=TOL;i++)
+     {point[1]=a+j*(b-a)/TOL;}
+     /*Buscamos intervalos con almenos una raiz*/
+     for(i=0;i<=TOL;i+=2)
+ 	 {
+		 if(POLI(points[i])*POLI(points[i+1])<0)
+		 {I+=2; I_roots[I-2]=points[i]; I_roots[I-1]=points[i]; }
+     		 if(points[i]*points[i+1]==0)
+           	 {
+	         if(points[i]==0){m++;roots[m]=points[i];}
+         	 if(points[i+1]==0){m++;roots[m]=points[i];}
+                 }
+ 	 }
+     /*Comprovamos número intervalos*/
+     if((I+1)!=(2*o)){printf("ERROR");}
+     /*Aplicamos Newton para obtener raízes*/
+     for(j=0;j<=I;i+=2)
+     {	
+	 x_i=(I_roots[j+1]-I_roots[j])/2.0;
+	 for(i=0;i<=1000;i++)
+          {x_ii=metNewd(x_i) if(fabs(x_i-x_ii)<=1.0e-7){m++;roots[m]=x_ii;} x_i=x_ii;}
+     }
+     /*Comprovamos número raices*/
+     if((m+1)!=(o)){printf("ERROR");}
+     /*Calculamos suma final aproximada*/
+     for(j=1;j<=o;j++)
+     {sum+=coefi(a,i)*f(roots[j-1]) }
+   }
+    return 0;
+ }
 
 //Función que evalua el polinomio de Legendre enésimo para x
-double polin_Legndr(double n,double x);
-//Función que evalua el polinomio de Chebyshev enésimo para x
-double polin_Cheby(double n,double x);
-//Función que da lista de intervalos de cambios de signo de polinomio
-int roots(double n, double a[], double b[]);
-//Función que evalua la derivada del polinomio de Legendre enésimo para x
-double d_polin_Legndr(double n,double x);
-/* */
-//Función que evalua la derivada del polinomio de Chebyshev enésimo para x
-/* */
- int main(void)
- {
-     
- }
- //Función que da lista de intervalos de cambios de signo de polinomio
-int roots(double n, double a[], double b[])
-{
-    
-}
- //Función que evalua el polinomio de Legendre enésimo para x
  double polin_Legndr(double n,double x)
  {
      unsigned int i;
      double P_i=1.0,P_ii=x,P_iii;
      if(n==0.0)
-     {
+    
          return P_i;
      }
      if(n=1.0)
@@ -75,3 +154,21 @@ double d_polin_Legndr(double n,double x)
      }
      return P_iii;
  }
+ 
+//Funcion que implementan el algoritmo del Método de Newton en precisión doble.
+double metNewd(double x)
+{
+    return x-(polid_n(x))/(polid_d(x));
+}
+ 
+//Función normal
+double polid_n(double x)
+{
+     return x*x*x-x-400;
+}
+
+//Función derivada 
+double polid_d(double x)
+{
+     return 3.0*x*x-1;
+}
