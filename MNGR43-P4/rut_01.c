@@ -75,7 +75,7 @@ int main(void)
       *          *Suma \approx integral                    *
       *          *                                         *
       ******************************************************/
-     double a=-1.0,b=1,
+     double a=-1.0,b=1.0,
 	    x_i=0, x_ii=0,
 	    o ,
 	    sum;
@@ -84,37 +84,38 @@ int main(void)
     /*cabezera del progrma*/
    for(o=2;o<=N;o+=2)
    {
-    sum=0.0;
+    sum=0.0; m=0; I=0;
     /*Generamos puntos intervalos*/   
      for(j=0;j<=TOL;j++)
-     {points[j]=a+(j*(b-a)/TOL);}
+     {points[j]=a+(j*(b-a)/TOL);printf("%g", points[j]);}
      /*Buscamos intervalos con almenos una raiz*/
      for(i=1;i<TOL;i++)
  	 {
 		 if(polin_Legndr(o,points[i-1])*polin_Legndr(o,points[i])<0)
-		 {I++; I_roots[I-1]=points[i-1];I++; I_roots[I-1]=points[i]; }
+		 {I++; I_roots[I-1]=points[i-1];I++; I_roots[I-1]=points[i];
+			 printf("[%g,%g]", I_roots[I-1],I_roots[I-2]); }
      		 if(points[i]*points[i+1]==0)
            	 {
 	         if(polin_Legndr(o,points[i-1])==0){m++;roots[m-1]=points[i];}
          	 if(polin_Legndr(o,points[i])==0){m++;roots[m-1]=points[i-1];}
              }
  	 }
- 	 printf("Fins aqui");
      /*Comprovamos número intervalos*/
-     if((I+1.0)!=(2.0*o)){printf("\nERROR");}
+     if((I)!=(2.0*o)){printf("\nERROR"); return -1;}
      printf("Fins aqui");
      /*Aplicamos Newton para obtener raízes*/
-     for(j=0;j<I;j+=2)
+     for(j=1;j<=I;j+=2)
      {	
-	 x_i=(I_roots[j+1]+I_roots[j])/2.0;
+	 x_i=(I_roots[j-1]+I_roots[j])/2.0;
 	 for(i=0;i<=100;i++)
-          {x_ii=metNewd(o,x_i); if(fabs(x_i-x_ii)<=1.0e-7){m++;roots[m-1]=x_ii;} x_i=x_ii;}
+          {x_ii=metNewd(o,x_i); if(fabs(x_i-x_ii)<=1.0e-7){m++;roots[m-1]=x_ii ; i=101;} x_i=x_ii;}
      }
+      printf("Fins aqui");
      /*Comprovamos número raices*/
-     if((m+1)!=(o)){printf("\nERROR");}
+     if((m)!=(o)){printf("\nERROR,m=%d]",m); return -1;}
      /*Calculamos suma final aproximada*/
-     for(j=0;j<=o;j++)
-     {sum+=coefi_Legndr(o,roots[j-1])*F(roots[j-1]);}
+     for(j=0;j<o;j++)
+     {sum+=coefi_Legndr(o,roots[j])*F(roots[j]);}
      printf("\nNew  [%g], is %.16G",o,sum);
    }
     return 0;
@@ -129,7 +130,7 @@ int main(void)
 //Función que evalua el polinomio de Legendre enésimo para x
  double polin_Legndr(double n,double x)
  {
-     unsigned int i;
+     double i;
      double P_i=1.0,P_ii=x,P_iii=0;
      if(n==0.0)
      {
@@ -141,7 +142,7 @@ int main(void)
      }
      for(i=2;i<=n;i++)
      {
-         P_iii=(1.0/(n+1.0))*(((2.0)*n+1.0)*x*P_ii-n*P_i);
+         P_iii=(1.0/(i))*(((2.0)*i-1.0)*x*P_ii-(i-1.0)*P_i);
          P_i=P_ii;
          P_ii=P_iii;
      }
@@ -151,13 +152,13 @@ int main(void)
 //Función que evalua la derivada del polinomio de Legendre enésimo para x
 double d_polin_Legndr(double n,double x)
 {
-    return 1.0/(1.0-x*x)*(-n*x*polin_Legndr(n,x)+n*d_polin_Legndr(n-1.0,x));
+    return 1.0/(1.0-x*x)*(-n*x*polin_Legndr(n,x)+n*polin_Legndr(n-1.0,x));
 }
 
 //Funcion que calcula los coeficientes de P(x) de Legendre.
   double coefi_Legndr(double n,double ro)
 {
-	double a= (2.0)/((1-ro)*(1-ro)*(d_polin_Legndr(n,ro)*d_polin_Legndr(n,ro))) ;
+	double a= (2.0)/((1-ro*ro)*(d_polin_Legndr(n,ro)*d_polin_Legndr(n,ro))) ;
 	return a;
 }
 //Funcion que implementan el algoritmo del Método de Newton en precisión doble.
