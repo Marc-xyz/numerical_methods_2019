@@ -8,8 +8,8 @@
 //Librerías y definiciones 
 #include<stdio.h>
 #include<math.h>
-#define N 8 //GRADO POLINOMIO MAXIMO
-#define TOL 100  //NUMERO DE INTERVALOS A CONSIDERAR
+#define N 16 //GRADO POLINOMIO MAXIMO
+#define TOL 1000  //NUMERO DE INTERVALOS A CONSIDERAR
 
 
 #define F(x) (exp(-x*x)) //FUNCION A INTEGRAR UNO
@@ -108,7 +108,7 @@ int main(void)
      {	
 	 x_i=(I_roots[j-1]+I_roots[j])/2.0;
 	 for(i=0;i<=100;i++)
-          {x_ii=metNewd(o,x_i); if(fabs(x_i-x_ii)<=1.0e-7){m++;roots[m-1]=x_ii ; i=101;} x_i=x_ii;}
+          {x_ii=metNewd(o,x_i); if(fabs(x_i-x_ii)<=1.0e-12){m++;roots[m-1]=x_ii ; i=101;} x_i=x_ii;}
      }
       printf("Fins aqui");
      /*Comprovamos número raices*/
