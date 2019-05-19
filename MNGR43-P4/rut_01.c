@@ -114,9 +114,10 @@ int main(void)
      /*Comprovamos número raices*/
      if((m)!=(o)){printf("\nERROR,m=%d]",m); return -1;}
      /*Calculamos suma final aproximada*/
+     for(i=0;i)
      for(j=0;j<o;j++)
      {sum+=coefi_Legndr(o,roots[j])*F(roots[j]);}
-     printf("\nNew  [%g], is %.16G",o,sum);
+     printf("\nNew  [%g], is %.16G and fite of Error is ",o,sum, sum1);
    }
     return 0;
  }
