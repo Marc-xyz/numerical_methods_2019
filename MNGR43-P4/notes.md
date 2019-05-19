@@ -1,13 +1,13 @@
 ## Secciones documento
 - (**Comentario**)Comentar que cuadratura se hace servir para resolver cada integral
-  - **Gauss-Legendre** 
+  - **Gauss-Legendre**
   - **Gauss-Chebyshev**
-- **Procedimento general** 
-  - Comentar **if** y mètodo modificado de la bisseción (**1**)
-  - Escribir ejercició téorico. (**2**)
-  - Comentamos (**3 i 4**)
+- **Procedimento general**
+  - Comentar **if** y método modificado de la bisección (**1**)
+  - Escribir ejercicio teórico. (**2**)
+  - Comentamos (**3 y 4**)
   - Comentamos nombre de los archivos y particularidades (**5**)
 - **Ejercici0**
-  - Diferencias en las aproximaciones de los dos mètodos (n=2,4,6,8,**10,12,14,16**)
+  - Diferencias en las aproximaciones de los dos métodos (n=2,4,6,8,**10,12,14,16**)
   -Comentar diferencias con Trapecios compuesta.
-- **Ejercciós complementarios o Strum**
+- **Ejercicios complementarios o Strum**
