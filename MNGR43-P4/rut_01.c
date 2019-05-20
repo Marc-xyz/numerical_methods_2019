@@ -7,21 +7,21 @@
  *     / 1                                                          *
  *     |   -x*x                                                     *
  *     | e      dx  mediante cuadratura de Gauss-Legendre.          *
- *     |            con precisión máxima de 15 decimales correctos  *
+ *     |            con precisión máxima de 15 decimales correctos. *
  *     / -1                                                         *
  ********************************************************************/
                
                  /***********************COMPILE**********************
                  *  Compilar con  nivel de optimización 3            *
-                 *  gcc -g -Wall -O3 -o rut_02 rut_02.c -lm          * 
+                 *  gcc -g -Wall -O3 -o rut_01 rut_01.c -lm          * 
                  *  Compilar con  sintaxis standard ANSI C del 1990  *
-                 *  gcc -g -Wall -pedantic -o rut_02 rut_02.c -lm    *
+                 *  gcc -g -Wall -pedantic -o rut_01 rut_01.c -lm    *
                  * ***************************************************/
 
 //Librerías y definiciones 
 #include<stdio.h>
 #include<math.h>
-#define N 16 //GRADO POLINOMIO MÁXIMO
+#define N 18 //GRADO POLINOMIO MÁXIMO
 #define TOL 1000  //NUMERO DE INTERVALOS A CONSIDERAR
 #define F(x) (exp(-x*x)) //FUNCION A INTEGRAR f(x):=e^(-x^2)
  
@@ -81,7 +81,7 @@ int main(void)
     sum=0.0; m=0; I=0;  
    /*Generamos puntos intervalos*/   
      for(j=0;j<=TOL;j++)
-     {points[j]=a+(j*(b-a)/TOL);printf("%g", points[j]);}
+     {points[j]=a+(j*(b-a)/TOL);}
    /*Buscamos intervalos con almenos una raiz*/
      for(i=1;i<TOL;i++)
  	 {
@@ -105,20 +105,22 @@ int main(void)
           {x_ii=metNewd(o,x_i);
            if(fabs(x_i-x_ii)<=1.0e-12){m++;roots[m-1]=x_ii ; i=101;}
 	    x_i=x_ii;}
+     }
     /*Comprovamos número raices*/
      if((m)!=(o))
         {printf("\nERRORR_02:No se han hallado todas las raíces del polinomio enesimo");
        return -1;}
     /*Calculamos suma final aproximada*/
-     for(i=0;i)
      for(j=0;j<o;j++)
      {sum+=coefi_Legndr(o,roots[j])*F(roots[j]);}
-     printf("\nNew  [%g], is %.16G and fite of Error is ",o,sum, sum1);
-   }
+     printf("\n Para [n=%2G] la aproximacion es: %.16G",o,sum);
+     printf(" y cota de error: ******************* ");
+     }
+    printf("\n");
     return 0;
  }
 
-/*******************************************************************
+/***********************DEFINITIONS*OF*FUNCTIONS********************
  *                                                                 *
  *                                                                 *
  *                                                                 *
@@ -145,7 +147,6 @@ int main(void)
      }
      return P_iii;
  }
-
 //Función que evalúa la derivada del polinomio de Legendre enésimo para x
 double d_polin_Legndr(double n,double x)
 {
