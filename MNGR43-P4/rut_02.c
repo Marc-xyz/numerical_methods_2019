@@ -6,7 +6,7 @@
  *     / 1                                                          *
  *     |     e^(-x^2)                                               *
  *     | ------------- dx    mediante cuadratura de Gauss-Chebyshev *
- *     |  (1-x^2)^(1/3)      con precisión máxima de 15 decimales   *
+ *     |  (1-x^2)^(1/3)      con precisión máxima de 03 decimales   *
  *     / 0                   decimales correctos .                  *
  ********************************************************************/
                 

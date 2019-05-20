@@ -6,7 +6,7 @@
  *     / 1                                                          *
  *     |   -x*x                                                     *
  *     | e      dx  mediante cuadratura de Gauss-Chebyshev.         *
- *     |            con precisión máxima de 15 decimales correctos. *
+ *     |            con precisión máxima de 04 decimales correctos. *
  *     / -1                                                         *
  ********************************************************************/
                 
