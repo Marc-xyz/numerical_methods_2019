@@ -1,20 +1,20 @@
 /****************************DATE************************************
  *FECHA ULTIMA MODIFICACIÓN:19/05/2019                              *
- *NOMBRE FICHERO:rut_01.c                                           *
+ *NOMBRE FICHERO:rut_01_x.c                                         *
  *DESCRIPCIÓN: Programa para calcular numéricamente la integral     * 
  *                                                                  *
  *     / 1                                                          *
  *     |     e^(-x^2)                                               *
  *     | ------------- dx    mediante cuadratura de Gauss-Legendre  *
- *     |  (1-x^2)^(1/3)      con precisión máxima de 15 decimales   *
+ *     |  (1-x^2)^(1/3)      con precisión máxima de ##  decimales  *
  *     / 0                   decimales correctos .                  *
  ********************************************************************/
                 
                  /***********************COMPILE**********************
                  *  Compilar con  nivel de optimización 3            *
-                 *  gcc -g -Wall -O3 -o rut_01 rut_01.c -lm          * 
+                 *  gcc -g -Wall -O3 -o rut_01_x rut_01_x.c -lm      * 
                  *  Compilar con  sintaxis standard ANSI C del 1990  *
-                 *  gcc -g -Wall -pedantic -o rut_01 rut_01.c -lm    *
+                 *  gcc -g -Wall -pedantic -o rut_01_x rut_01_x.c -lm*
                  * ***************************************************/
 
 //Librerías y definiciones 
@@ -23,7 +23,7 @@
 #define N 20 //GRADO POLINOMIO MÁXIMO
 #define TOL 1000  //NUMERO DE INTERVALOS A CONSIDERAR
 /*FUNCIÓN A INTEGRAR MODIFICADA*/
-#define G(x) ((1.0/2.0)*exp(-x*x)*pow(1.0-x*x,1.0/6.0))
+#define G(x) ((1.0/2.0)*exp(-x*x)*pow(1.0-x*x,-1.0/3.0))
 
 
 //Función que implementan el algoritmo del Método de Newton en precisión doble.

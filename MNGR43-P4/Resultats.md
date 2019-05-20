@@ -1,7 +1,7 @@
 ## Resultados 
 
 # Integral 1: (\approx               1.493648265624854   1)
-  -Legendre:
+  -Legendre (**rut_01.c**):
    - Para [n= 2] la aproximacion es: 1.433062621147579 y cota de error: ******************* 
    - Para [n= 4] la aproximacion es: 1.493334622449539 y cota de error: ******************* 
    - Para [n= 6] la aproximacion es: 1.493647614150605 y cota de error: ******************* 
@@ -12,7 +12,7 @@
    - Para [n=16] la aproximacion es: 1.493648265624854 y cota de error: ******************* 
    - Para [n=18] la aproximacion es: 1.493648265624854 y cota de error: *******************
    
-  -Chebyshev:
+  -Chebyshev (**rut_02_x.c**):
    - Para [n= 2] la aproximacion es: 1.347372359753599 y cota de error: ******************* 
    - Para [n= 4] la aproximacion es: 1.509544014901066 y cota de error: ******************* 
    - Para [n= 6] la aproximacion es: 1.501716307252864 y cota de error: ******************* 
@@ -28,7 +28,7 @@
 
 
 # Integral 2: (\approx               0.88957533037164453   1)
-  -Legendre: 
+  -Legendre (**rut_01_x.c**):
    - Para [n= 2] la aproximacion es: 0.8202235964492217 y cota de error: ******************* 
    - Para [n= 4] la aproximacion es: 0.8653882550375894 y cota de error: ******************* 
    - Para [n= 6] la aproximacion es: 0.8745199676806141 y cota de error: ******************* 
@@ -40,7 +40,8 @@
    - Para [n=18] la aproximacion es: 0.8857808734038876 y cota de error: ******************* 
    - Para [n=20] la aproximacion es: 0.8862648225519152 y cota de error: *******************
        IGNORAR : [Forzando programa: Para [n=378] la aproximacion es: **0.8895**073629489517]
-  -Chebyshev:
+
+  -Chebyshev (**rut_01.c**):
    - Para [n= 2] la aproximacion es: 0.8487913990500435 y cota de error: ******************* 
    - Para [n= 4] la aproximacion es: 0.9035877798072207 y cota de error: ******************* 
    - Para [n= 6] la aproximacion es: 0.8982364172452582 y cota de error: ******************* 
