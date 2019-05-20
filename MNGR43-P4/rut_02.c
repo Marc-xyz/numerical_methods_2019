@@ -23,10 +23,10 @@
 //Librerías y definiciones 
 #include<stdio.h>
 #include<math.h>
-#define N 18 //GRADO POLINOMIO MÁXIMO
-#define TOL 1000  //NUMERO DE INTERVALOS A CONSIDERAR
+#define N 500 //GRADO POLINOMIO MÁXIMO
+#define TOL 100000  //NUMERO DE INTERVALOS A CONSIDERAR
 /*FUNCIÓN A INTEGRAR MODIFICADA*/
-#define G(x) ((1.0/2.0)*exp(-x*x)*pow(1-x,1/6)*pow(1+x,1/6))
+#define G(x) ((1.0/2.0)*exp(-x*x)*pow(1.0-x*x,1.0/6.0))
 
 
 //Funcion que implementan el algoritmo del Método de Newton en precisión doble.

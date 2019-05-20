@@ -5,12 +5,12 @@
  *DESCRIPCIÓN: Programa para calcular numéricamente la integral     * 
  *                                                                  *
  *     / 1                                                          *
- *     |   -x*x                                                     *
- *     | e      dx  mediante cuadratura de Gauss-Legendre.          *
- *     |            con precisión máxima de 15 decimales correctos. *
- *     / -1                                                         *
+ *     |     e^(-x^2)                                               *
+ *     | ------------- dx    mediante cuadratura de Gauss-Legendre  *
+ *     |  (1-x^2)^(1/3)      con precisión máxima de 15 decimales   *
+ *     / 0                   decimales correctos .                  *
  ********************************************************************/
-               
+                
                  /***********************COMPILE**********************
                  *  Compilar con  nivel de optimización 3            *
                  *  gcc -g -Wall -O3 -o rut_01 rut_01.c -lm          * 
@@ -23,8 +23,8 @@
 #include<math.h>
 #define N 20 //GRADO POLINOMIO MÁXIMO
 #define TOL 1000  //NUMERO DE INTERVALOS A CONSIDERAR
-#define F(x) (exp(-x*x)) //FUNCION A INTEGRAR f(x):=e^(-x^2)
- 
+/*FUNCIÓN A INTEGRAR MODIFICADA*/
+#define G(x) ((1.0/2.0)*exp(-x*x)*pow(1.0-x*x,1.0/6.0))
 
 
 //Función que implementan el algoritmo del Método de Newton en precisión doble.
@@ -112,7 +112,7 @@ int main(void)
        return -1;}
     /*Calculamos suma final aproximada*/
      for(j=0;j<o;j++)
-     {sum+=coefi_Legndr(o,roots[j])*F(roots[j]);}
+     {sum+=coefi_Legndr(o,roots[j])*G(roots[j]);}
      printf("\n Para [n=%2G] la aproximacion es: %.16G",o,sum);
      printf(" y cota de error: ******************* ");
      }
