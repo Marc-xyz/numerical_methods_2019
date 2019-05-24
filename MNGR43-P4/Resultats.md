@@ -1,30 +1,31 @@
 ## Resultados 
 
-# Integral 1: (\approx               1.493648265624854   1)
+# Integral 1: 
  * Legendre (**rut_01.c**):
-   - Para [n= 2] la aproximacion es: 1.433062621147579 y cota de error: ******************* 
-   - Para [n= 4] la aproximacion es: 1.493334622449539 y cota de error: ******************* 
-   - Para [n= 6] la aproximacion es: 1.493647614150605 y cota de error: ******************* 
-   - Para [n= 8] la aproximacion es: 1.493648264899014 y cota de error: ******************* 
-   - Para [n=10] la aproximacion es: 1.493648265624351 y cota de error: ******************* 
-   - Para [n=12] la aproximacion es: 1.493648265624854 y cota de error: ******************* 
-   - Para [n=14] la aproximacion es: 1.493648265624855 y cota de error: ******************* 
-   - Para [n=16] la aproximacion es: 1.493648265624854 y cota de error: ******************* 
-   - Para [n=18] la aproximacion es: 1.493648265624854 y cota de error: *******************
+   - Para [n= 2] la aproximacion es: 1.433062621147579  
+   - Para [n= 4] la aproximacion es: 1.493334622449539  
+   - Para [n= 6] la aproximacion es: 1.493647614150605  
+   - Para [n= 8] la aproximacion es: 1.493648264899014  
+   - Para [n=10] la aproximacion es: 1.493648265624351  
+   - Para [n=12] la aproximacion es: 1.493648265624854  
+   - Para [n=14] la aproximacion es: 1.493648265624855 
+   - Para [n=16] la aproximacion es: 1.493648265624854  
+   - Para [n=18] la aproximacion es: 1.493648265624854 
    
  * Chebyshev (**rut_02_x.c**):
-   - Para [n= 2] la aproximacion es: 1.347372359753599 y cota de error: ******************* 
-   - Para [n= 4] la aproximacion es: 1.509544014901066 y cota de error: ******************* 
-   - Para [n= 6] la aproximacion es: 1.501716307252864 y cota de error: ******************* 
-   - Para [n= 8] la aproximacion es: 1.498269900093957 y cota de error: ******************* 
-   - Para [n=10] la aproximacion es: 1.496630466539133 y cota de error: *******************
-   - Para [n=12] la aproximacion es: 1.495728452515196 y cota de error: ******************* 
-   - Para [n=14] la aproximacion es: 1.495180653090259 y cota de error: ******************* 
-   - Para [n=16] la aproximacion es: 1.494823531872153 y cota de error: ******************* 
-   - Para [n=18] la aproximacion es: 1.494577972218071 y cota de error: ******************* 
-   - Para [n=20] la aproximacion es: 1.494401966092653 y cota de error: ******************* 
+   - Para [n= 2] la aproximacion es: 1.347372359753599  
+   - Para [n= 4] la aproximacion es: 1.509544014901066  
+   - Para [n= 6] la aproximacion es: 1.501716307252864  
+   - Para [n= 8] la aproximacion es: 1.498269900093957  
+   - Para [n=10] la aproximacion es: 1.496630466539133 
+   - Para [n=12] la aproximacion es: 1.495728452515196  
+   - Para [n=14] la aproximacion es: 1.495180653090259  
+   - Para [n=16] la aproximacion es: 1.494823531872153  
+   - Para [n=18] la aproximacion es: 1.494577972218071  
+   - Para [n=20] la aproximacion es: 1.494401966092653  
    + IGNORAR :[Forzando programa: Para [n=240] la aproximacion es: **1.4936**53518422632]
-   -Trapecios (**rut_03.c**):
+
+ * Trapecios (**rut_03.c**):
    - Para [n= 4] la aproximacion es: 1.462740503657126 y cota de error: ******************* 
    - Para [n= 8] la aproximacion es: 1.485968195600762 y cota de error: ******************* 
    - Para [n=16] la aproximacion es: 1.49173122969139 y cota de error: ******************* 
@@ -34,21 +35,28 @@
    - Para [n=256] la aproximacion es: 1.493640781083235 y cota de error: ******************* 
    - Para [n=512] la aproximacion es: 1.493646394492304 y cota de error: ******************* 
    - Para [n=1024] la aproximacion es: 1.493647797841895 y cota de error: ******************
-     **1.49364** 
+   + **1.49364** 
 
-# Integral 2: (\approx               0.88957533037164453   1)
+# Integral 2:
+
+     / 1                                                         
+     |     e^(-x^2)                                               
+     | ------------- dx    
+     |  (1-x^2)^(1/3)                                             
+     / 0 
+              
  * Legendre (**rut_01_x.c**):
-   - Para [n= 2] la aproximacion es: 0.8202235964492217 y cota de error: ******************* 
-   - Para [n= 4] la aproximacion es: 0.8653882550375894 y cota de error: ******************* 
-   - Para [n= 6] la aproximacion es: 0.8745199676806141 y cota de error: ******************* 
-   - Para [n= 8] la aproximacion es: 0.8789653183338564 y cota de error: ******************* 
-   - Para [n=10] la aproximacion es: 0.881540069130857 y cota de error: ******************* 
-   - Para [n=12] la aproximacion es: 0.8831932589792649 y cota de error: ******************* 
-   - Para [n=14] la aproximacion es: 0.8843322533179921 y cota de error: ******************* 
-   - Para [n=16] la aproximacion es: 0.8851582034137871 y cota de error: ******************* 
-   - Para [n=18] la aproximacion es: 0.8857808734038876 y cota de error: ******************* 
-   - Para [n=20] la aproximacion es: 0.8862648225519152 y cota de error: *******************
-       IGNORAR : [Forzando programa: Para [n=378] la aproximacion es: **0.8895**073629489517]
+   - Para [n= 2] la aproximacion es: 0.8202235964492217  
+   - Para [n= 4] la aproximacion es: 0.8653882550375894  
+   - Para [n= 6] la aproximacion es: 0.8745199676806141  
+   - Para [n= 8] la aproximacion es: 0.8789653183338564  
+   - Para [n=10] la aproximacion es: 0.881540069130857  
+   - Para [n=12] la aproximacion es: 0.8831932589792649  
+   - Para [n=14] la aproximacion es: 0.8843322533179921  
+   - Para [n=16] la aproximacion es: 0.8851582034137871  
+   - Para [n=18] la aproximacion es: 0.8857808734038876  
+   - Para [n=20] la aproximacion es: 0.8862648225519152 
+   + IGNORAR : [Forzando programa: Para [n=378] la aproximacion es: **0.8895**073629489517]
 
  * Chebyshev (**rut_02.c**):
    - Para [n= 2] la aproximacion es: 0.8487913990500435 y cota de error: ******************* 
@@ -62,7 +70,8 @@
    - Para [n=18] la aproximacion es: 0.8916225846861565 y cota de error: ******************* 
    - Para [n=20] la aproximacion es: 0.8913552213249788 y cota de error: ******************* 
    +  IGNORAR: [Forzando progrma: Para [n=248] la aproximacion es: **0.889**6374857560778 ]
- * Trapecios (**rut_03_x.c**):
+ 
+* Trapecios (**rut_03_x.c**):
    - Para [n= 2] la aproximacion es: 730.6492382549997 y cota de error: ******************* 
    - Para [n= 4] la aproximacion es: 365.7522185921295 y cota de error: ******************* 
    - Para [n= 8] la aproximacion es: 183.3080938146884 y cota de error: ******************* 

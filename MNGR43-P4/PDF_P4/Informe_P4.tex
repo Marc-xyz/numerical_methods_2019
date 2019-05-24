@@ -169,5 +169,45 @@ El sistema lineal que han de cumplir los coeficientes $a_i$ puede plantearse
 	\label{tab:pr3}
 	\normalsize
 \end{table}
- \section{Ejercicios opcionales}
+\section{Ejercicios opcionales}
+\subsection{Extensión de las fórmulas de cuadratura Gaussiana  a un intervalo $[a,b]$}
+Consideremos el cambio de variable de 
+$$
+\begin{cases}
+\displaystyle x=\frac{(b-a)t+(b-a)}{2}\\
+\displaystyle dx=\frac{b-a}{2}dt
+\end{cases}
+\text{ donde } 	\quad
+\begin{cases}
+\displaystyle\frac{(b-a)(1)+(b+a)}{2}=\frac{b-a+b+a}{2}=b\\
+\\
+\displaystyle\frac{(b-a)(-1)+(b+a)}{2}=\frac{-b+a+b+a}{2}=a\\
+\end{cases}
+$$
+Aplicando esto a la fórmula de cuadratura:
+$$
+\displaystyle \int_{a}^{b}w(x)f(x)dx= \frac{b-a}{2}\int_{-1}^{\esp1}w\left(\frac{(b-a)t+(b-a)}{2}\right)f\left(\frac{(b-a)t+(b-a)}{2}\right)dt
+$$
+\subsection{Calculo de la longitud del arco de una elipse}
+Partiendo de la siguiente  ecuación de una elipse, calcularemos la longitud del arco de esta en el intervalo $[-1,1]$  del plano superior, mediante cuadratura de Gauss-Legendre. Primero expresamos $y$ en función de $x$ y calculamos $y'(x)$:
+ $$
+ \left(\frac{x}{2}\right)^2+ \left(2y\right)^2=1 
+ \Rightarrow
+ \begin{cases} y(x)_+=+\frac{1}{2}\sqrt{1-\left(\frac{x}{2}\right)^2}\\
+ y'(x)_+=\displaystyle\frac{-x}{4\sqrt{1-\left(\frac{x}{2}\right)^2}}
+ \end{cases}
+ $$
+Seguidamente consideramos la integral del calculo de longitud de un arco
+$$
+\displaystyle L(y(x),a,b)= \int_{a}^{b} \sqrt{1+y'(x)^2}dx 
+$$
+substituyendo
+$$
+\displaystyle L(y(x),-1,1)= \int_{-1}^{\esp 1} \sqrt{1+y'(x)^2}dx= \int_{-1}^{\esp1} \sqrt{1+\frac{x^2}{16(4-x^2)}}dx=
+$$
+$$
+\int_{-1}^{\esp1} \sqrt{\frac{64-15x^2}{64-16x^2}}dx
+$$
+
+ 
 \end{document}

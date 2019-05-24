@@ -1,6 +1,6 @@
 
 /****************************DATE************************************
- *FECHA ULTIMA MODIFICACIÓN:19/05/2019                              *
+i *FECHA ULTIMA MODIFICACIÓN:19/05/2019                              *
  *NOMBRE FICHERO:rut_01.c                                           *
  *DESCRIPCIÓN: Programa para calcular numéricamente la integral     * 
  *                                                                  *
