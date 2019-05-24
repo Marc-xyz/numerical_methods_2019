@@ -74,9 +74,100 @@ En el presente documento se comentan las soluciones al ejercicio final propuesto
 %\tableofcontents
 %\setcounter{section}{+3}
 \normalsize
-\section{Ejercicio}
- Algunas consideraciones previas son decidir en cada una de las integrales propuestas a resolver que tipo de cuadratura efectuar, la primera integral propuesta pude resolverse de forma directa mediante la cuadratura de Gauss-Legendre. La segunda \prov{modificar integral}
-\subsection{Procedimiento general}
+\section{Cálculos previos}
+Consideremos las siguientes manipulaciones algebraicas elementales y definiciones de las integrales dadas. Para la primera integral:
+ $$
+ 	F(x) \bigl\lvert_{-1}^{\esp\esp1} \esp:=\displaystyle\int_{-1}^{1}e^{-x^2}dx 
+ 	\qquad  \qquad \qquad \qquad  \qquad \qquad  \qquad  \qquad \qquad  \qquad \qquad  \qquad  \qquad \qquad \qquad
+ 	$$
+ 	$$
+ 	\qquad \qquad \qquad =\begin{cases}
+ 	\quad \displaystyle \int_{-1}^{1}e^{-x^2} \cdot 1 dx  \quad   \quad \quad \quad \quad \quad \quad \quad\quad \quad\Rightarrow \begin{pmatrix}f_1(x):=e^{-x^2} \\ \cod{ (C.Gauss-Legendre)}\end{pmatrix}
+ 	\\
+ 	\quad \displaystyle \int_{-1}^{1}\left(e^{-x^2} \cdot  \sqrt{1-x^2}\right) \frac{1}{\sqrt{1-x^2}}dx \quad \quad \Rightarrow \begin{pmatrix} f_2(x):=e^{-x^2}
+ 	 \cdot  \sqrt{1-x^2} \\ \cod{ (C.Gauss-Chebyshev)}
+ 	\end{pmatrix} \end{cases}
+ $$
+ Y para la segunda:
+$$
+G(x)\bigl\lvert_{\esp0}^{\esp1} \esp:=\displaystyle\int_{0}^{1}\frac{e^{-x^2}}{\sqrt[3]{1-x^2}}dx \overset{g(x)=g(-x)}{=} \frac{1}{2} \cdot \displaystyle\int_{-1}^{1}\frac{e^{-x^2}}{\sqrt[3]{1-x^2}}dx 
+\qquad  \qquad \qquad \qquad  \qquad \qquad  \qquad  \qquad \qquad 
+$$
+$$
+ \qquad \qquad  \qquad \qquad 
+ = \begin{cases} \quad \displaystyle\int_{-1}^{1}\frac{1}{2}\cdot \frac{e^{-x^2}}{\sqrt[3]{1-x^2}} \cdot 1 \cdot dx  \esp \quad \quad \quad \quad \quad\quad \quad\Rightarrow
+ \begin{pmatrix} g_1(x):=\frac{e^{-x^2}}{\sqrt[3]{1-x^2}} 
+ \\ \cod{ (C.Gauss-Legendre)} \end{pmatrix}
+\\
+\quad \displaystyle \int_{-1}^{1}\ \frac{1}{2} \left(e^{-x^2} \cdot  \sqrt[6]{1-x^2}\right) \frac{1}{\sqrt{1-x^2}}dx \quad \quad \Rightarrow \begin{pmatrix} g_2(x):=e^{-x^2} \cdot  \sqrt[6]{1-x^2} \\\cod{ (C.Gauss-Chebyshev)} \end{pmatrix}
+\end{cases}
+$$
+ \newpage
+\section{Procedimiento general}
  
- Tal como se detalla en el primer punto del \textit{procedimiento general}, en este caso mediante el método de la Bisección modificado, bajo las suposiciones del Lema 1 ["...."] obtenemos, dado un polinomio, los $n$ intervalos disjuntos dos a dos  en los que se encuentran sus raíces.
+ Tal como se detalla en el primer punto del \textit{procedimiento general}, en este caso mediante una adaptación del \textit{método de la bisección}, se hallan todos los intervalos en los que hay una única raíz del polinomio ortogonal dado. Esto lo podemos hacer ya que por \textbf{Lema 1} sabemos que  todas las raíces de estos polinomios son reales y simples, por tanto esperamos $n$ intervalos si estos tienen una longitud \textit{suficientemente} pequeña.
+ 
+ Para lograr esto, con una filosofía heurística, dividimos el intervalo $[-1,1]$ en \cod{TOL} intervalos de longitud $\frac{2}{\cod{TOL}}$ y comprobamos si hay cambio de signo en cada uno de ellos (cosa que implicaría la presencia de al menos una raíz, por Teorema de Bolzano). 
+ 
+ Para asegurar que en cada intervalo solo cojeemos una única raíz \footnote{Equivalente a  que la longitud del intervalo sea  \textit{suficientemente} pequeña} se utilizan dos contadores, uno para el número de intervalos con cambio de signo y otro para el número de raíces halladas \footnote{Ya que estas podrían coincidir en uno de los extremos de uno de los intervalos.}
+ 
+ El valor \cod{TOL} puede modificar-se, por ejemplo \cod{\#define TOL 10000}  en vez de \cod{\#define TOL 1000}, aunque  para polinomios de grado $\leq 20$ no es necesario. En caso de que en alguno de los intervalos hubiera más de una raíz, mediante la presencia de los contadores anteriormente mencionados, el programa imprimiría  un mensaje de error que solventaríamos modificando el paramento \cod{TOL}.  
+ 
+ Una vez encontrados estos intervalos eligiendo el punto medio y aplicamos el proceso iterativo de Newton-Raphson de convergencia cuadrática para raíces simples conseguiriamos las raíces con  tolerancia deseada o superior, sin necesidad de aplicar Sturm y asegurando que hemos encontrado todas las raíces del polinomio con la tolerancia deseada.
+ 
+El sistema lineal que han de cumplir los coeficientes $a_i$ puede plantearse 
+ \section{Apartado a)}
+\begin{table}[ht]
+	\footnotesize
+	\centering
+ \begin{tabular}{|c|c|c|}
+ 	\hline
+ 	Resultados para $ \begin{matrix} \\ \displaystyle\int_{-1}^{1}e^{-x^2}dx\\
+ 	\\
+ 	\end{matrix}$&\cod{ (C.Gauss-Legendre)}&\cod{ (C.Gauss-Chebyshev)}\\
+ 	\hline
+ 	\cod{n=2}&{\textbf{1.4}33062621147579}&\textbf{1}.347372359753599\\
+ 	\hline
+ 	\cod{n=4}&{\textbf{1.493}334622449539}&\textbf{1}.509544014901066\\
+ 	\hline
+ 	\cod{n=6}&{\textbf{1.49364}7614150605}&\textbf{1}.501716307252864\\
+ 	\hline
+ 	\cod{n=8}&{\textbf{1.49364826}4899014}&\textbf{1.49}8269900093957\\
+ 	\hline
+ 	\cod{n=10}&{\textbf{1.493648265624}351}&\textbf{1.49}6630466539133\\
+ 	\hline
+ 	\cod{n=12}&{\textbf{1.493648265624854}}&\textbf{1.49}5728452515196\\
+ 	\hline
+ \end{tabular}
+	\caption{\footnotesize Resultados obtenidos  mediante \cod{pr3\_abc\_d.c}}
+\label{tab:pr3}
+\normalsize
+\end{table}
+\begin{table}[ht]
+	\footnotesize
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Resultados para $ \begin{matrix} \\ \displaystyle\int_{0}^{1}\frac{e^{-x^2}}{\sqrt[3]{1-x^2}}dx\\
+		\\
+		\end{matrix}$&\cod{ (C.Gauss-Legendre)}&\cod{ (C.Gauss-Chebyshev)}\\
+		\hline
+		\cod{n=2}&\textbf{0.8}202235964492217&\textbf{0.8}487913990500435\\
+		\hline
+		\cod{n=4}&\textbf{0.8}653882550375894&\textbf{0}.9035877798072207\\
+		\hline
+		\cod{n=6}&\textbf{0.8}745199676806141&\textbf{0.8}982364172452582\\
+		\hline
+		\cod{n=8}&\textbf{0.8}789653183338564&\textbf{0.8}955429715534456\\
+		\hline
+		\cod{n=10}& \textbf{0.88}1540069130857&\textbf{0.8}940299048220692\\
+		\hline
+		\cod{n=12}&\textbf{0.88}31932589792649&\textbf{0.8}930783042638903\\
+		\hline
+	\end{tabular}
+	\caption{\footnotesize Resultados obtenidos  mediante \cod{pr3\_abc\_d.c}}
+	\label{tab:pr3}
+	\normalsize
+\end{table}
+ \section{Ejercicios opcionales}
 \end{document}

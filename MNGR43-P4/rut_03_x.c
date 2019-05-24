@@ -23,7 +23,7 @@
 #include<stdio.h>
 #include<math.h>
 /*FUNCIÓN A INTEGRAR MODIFICADA [0,1] */
-#define G(x) (1.0/2.0)*(exp(-x*x)*pow(1.0-x*x,-1.0/3.0))
+#define G(x) (exp(-x*x)*pow(1.0-x*x,-1.0/3.0))
 #define F(x) (exp(-x*x)) //FUNCION A INTEGRAR f(x):=e^(-x^2) en [-1,1]
 
 //(02)Función cabecera
@@ -40,9 +40,9 @@ int main(void)
 {
     double j;
     printf("\nCalculo mediante metodo compuesto de los Trapecios");    
-    for(j=4.0;j<=1024.0;j=j*2.0)
+    for(j=2.0;j<=4096.0;j=j*2.0)
     {
-    if(metTrapz(-1.0,1.0,j)!=0){error(); return -1;}
+    if(metTrapz(0.0,1.0-1.e-12,j)!=0){error(); return -1;}
     }
     printf("\n");
 }
