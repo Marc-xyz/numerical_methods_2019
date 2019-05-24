@@ -23,7 +23,7 @@
 #include<stdio.h>
 #include<math.h>
 /*FUNCIÓN A INTEGRAR MODIFICADA [0,1] */
-#define G(x) (*exp(-x*x)*pow(1.0-x*x,-1.0/3.0))
+#define G(x) (exp(-x*x)*pow(1.0-x*x,-1.0/3.0))
 #define F(x) (exp(-x*x)) //FUNCION A INTEGRAR f(x):=e^(-x^2) en [-1,1]
 
 //(02)Función cabecera
