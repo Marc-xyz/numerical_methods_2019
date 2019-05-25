@@ -1,6 +1,6 @@
 /****************************DATE************************************
  *FECHA ULTIMA MODIFICACIÓN:24/05/2019                              *
- *NOMBRE FICHERO ORIGEN:rut_02.c                                    *
+ *NOMBRE FICHERO:int_02_C.c                                         *
  *DESCRIPCIÓN: Programa para calcular numéricamente la integral     * 
  *                                                                  *
  *     / 1                                                          *
@@ -16,16 +16,16 @@
                 
                  /***********************COMPILE**********************
                  *  Compilar con  nivel de optimización 3            *
-                 *  gcc -g -Wall -O3 -o rut_02 rut_02.c -lm          * 
+                 *  gcc -g -Wall -O3 -o int_02_C int_02_C.c -lm      * 
                  *  Compilar con  sintaxis standard ANSI C del 1990  *
-                 *  gcc -g -Wall -pedantic -o rut_02 rut_02.c -lm    *
+                 *  gcc -g -Wall -pedantic -o int_02_C rut_02_C.c -lm*
   		 ****************************************************/
 
 //Librerías y definiciones 
 #include<stdio.h>
 #include<math.h>
 #define N 20 //GRADO POLINOMIO MÁXIMO
-#define TOL 1000  //NUMERO DE INTERVALOS A CONSIDERAR
+#define TOL 1000  //NÚMERO DE INTERVALOS A CONSIDERAR
 /*FUNCIÓN A INTEGRAR MODIFICADA*/
 #define G(x) ((1.0/2.0)*exp(-x*x)*pow(1.0-x*x,1.0/6.0))
 
@@ -38,7 +38,7 @@
  double d_polin_Cheby(double n, double x);
 //(05) Función que calcula los coeficientes de P(x) de Chebyshev.
  double coefi_Cheby(double n);
-//(06) Función que imprime la cabecera del programa.
+ //(06) Función que imprime la cabecera del programa.
  void cabecera(void);
 
 
@@ -80,7 +80,7 @@ int main(void)
 
 /*Imprimimos cabecera*/
  cabecera();
-//Imprimir nombre 
+//Imprimir datos programa  
   for(o=2;o<=N;o+=2)
   {
    //Inicializamos los contadores a cero 
@@ -101,9 +101,9 @@ int main(void)
          }
    /*Comprobamos número intervalos*/
      if((I)!=(2.0*o))
-             {printf("\nERROR_01:No se han hallado todas las raíces del polinomio enésimo");
+             {printf("\nERROR_01:No se han hallado todas los intervalos de  raíces del polinomio enésimo");
              return -1;}
-   /*Aplicamos Newton para obtener raízes*/
+   /*Aplicamos Newton para obtener raíces*/
      for(j=1;j<=I;j+=2)
      {
           x_i=(I_roots[j-1]+I_roots[j])/2.0;
@@ -112,7 +112,7 @@ int main(void)
            if(fabs(x_i-x_ii)<=1.0e-12){m++;roots[m-1]=x_ii ; i=101;}
             x_i=x_ii;}
      }
-    /*Comprovamos número raices*/
+    /*Comprobamos número raíces*/
      if((m)!=(o))
         {printf("\nERRORR_02:No se han hallado todas las raíces del polinomio enésimo");} 
     /*Calculamos suma final aproximada*/
@@ -176,7 +176,7 @@ void cabecera(void)
 {
 printf("\n****************************DATE************************************");
 printf("\n*FECHA ULTIMA MODIFICACIÓN:24/05/2019                              *");
-printf("\n*NOMBRE FICHERO ORIGEN:rut_02.c                                    *");
+printf("\n*NOMBRE FICHERO ORIGEN:int_02_C.c                                  *");
 printf("\n*DESCRIPCIÓN: Programa para calcular numéricamente la integral     *");
 printf("\n*                                                                  *");
 printf("\n*     / 1                                                          *");

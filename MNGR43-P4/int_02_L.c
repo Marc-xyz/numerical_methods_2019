@@ -1,49 +1,53 @@
-
 /****************************DATE************************************
-i *FECHA ULTIMA MODIFICACIÓN:19/05/2019                              *
- *NOMBRE FICHERO:rut_01.c                                           *
+ *FECHA ULTIMA MODIFICACIÓN:24/05/2019                              *
+ *NOMBRE FICHERO:int_02_L.c                                         *
  *DESCRIPCIÓN: Programa para calcular numéricamente la integral     * 
  *                                                                  *
  *     / 1                                                          *
- *     |   -x*x                                                     *
- *     | e      dx  mediante cuadratura de Gauss-Legendre.          *
- *     |            con precisión máxima de 15 decimales correctos. *
- *     / -1                                                         *
+ *     |     e^(-x^2)                                               *
+ *     | ------------- dx    mediante cuadratura de Gauss-Legendre  *
+ *     |  (1-x^2)^(1/3)      con precisión máxima de 02  decimales  *
+ *     / 0                   decimales correctos .                  *
+ *                                                                  *
+ *                           ***Forzando programa:                  *
+ *                           Modificando TOL:=100000 y N:=378       *
+ *                           ------> 04 decimales correctos.        *
+ *                                                                  *
  ********************************************************************/
-               
+                
                  /***********************COMPILE**********************
                  *  Compilar con  nivel de optimización 3            *
-                 *  gcc -g -Wall -O3 -o rut_01 rut_01.c -lm          * 
+                 *  gcc -g -Wall -O3 -o int_02_L int_02_L.c -lm      * 
                  *  Compilar con  sintaxis standard ANSI C del 1990  *
-                 *  gcc -g -Wall -pedantic -o rut_01 rut_01.c -lm    *
+                 *  gcc -g -Wall -pedantic -o int_02_L int_02_L.c -lm*
                  * ***************************************************/
 
 //Librerías y definiciones 
 #include<stdio.h>
 #include<math.h>
 #define N 20 //GRADO POLINOMIO MÁXIMO
-#define TOL 1000  //NUMERO DE INTERVALOS A CONSIDERAR
-#define F(x) (exp(-x*x)) //FUNCION A INTEGRAR f(x):=e^(-x^2)
- 
+#define TOL 1000  //NÚMERO DE INTERVALOS A CONSIDERAR
+/*FUNCIÓN A INTEGRAR MODIFICADA*/
+#define G(x) ((1.0/2.0)*exp(-x*x)*pow(1.0-x*x,-1.0/3.0))
 
 
-//Función que implementan el algoritmo del Método de Newton en precisión doble.
+//(02)Función que implementan el algoritmo del Método de Newton en precisión doble.
  double metNewd(double n, double x);
-//Función que evalúa el polinomio de Legendre enésimo para x.
+//(03)Función que evalúa el polinomio de Legendre enésimo para x.
  double polin_Legndr(double n,double x);
-//Función que evalúa la derivada del polinomio de Legendre enésimo para x.
+//(04)Función que evalúa la derivada del polinomio de Legendre enésimo para x.
  double d_polin_Legndr(double n,double x);
-//Función que calcula los coeficientes de P(x) de Legendre.
+//(05)Función que calcula los coeficientes de P(x) de Legendre.
  double coefi_Legndr(double n,double ro);
-
+//(06) Función que imprime la cabecera del programa.
+ void cabecera(void);
 
 /*************************THEORETICAL COMMENTS************************************
  * Lema polinomio ortogonal --> todas raíces simples, reales, y en (a,b).        *
- * Conocemos número de soluciones y por tanto el número de intervalos (multip=1) * 
- * Localizar intervalos de cambio de sign .                                      *
+ * Conocemos número de soluciones y por tanto el número de intervalos (multip=1) *
  *********************************************************************************/
 
-//Función principal
+//(01)Función principal
 int main(void)
 {
  /*********************Vectores:*********************** 
@@ -52,29 +56,30 @@ int main(void)
   *         *Raíces                                   *
   *****************************************************/
   double points[TOL+1],
-           I_roots[2*TOL], //mo
-	    roots[N+1];
+         I_roots[2*TOL], 
+	 roots[N+1];
 
  /***********************Valores:***********************
   *          *Intervalo [a,b]=[-1,1]                   *
   *          *Pivote 1 y 2                             *
   *          *Grado de P(x) en cada iteración          *
   *          *Suma \approx integral                    *
-  *          *                                         *
   ******************************************************/
   double a=-1.0,b=1.0,
-	   x_i=0, x_ii=0,
-	   o ,
-	   sum;
+	 x_i=0, x_ii=0,
+	 o,
+	 sum;
  /************************Contadores********************
   *          *Contadores para for's.                   * 
   *          *Contador de número de raíces y intervalos*
   *           con raíces.                              *
   ******************************************************/
   unsigned int j, i, 
-		  m=0, I=0; 
- /*cabezera del progrma*/
-// Iprimir nombre 
+	       m=0, I=0; 
+
+/*Imprimimos cabecera*/
+  cabecera();
+ //Imprimir datos programa 
   for(o=2;o<=N;o+=2)
   {
    //Inicializamos los contadores a cero 
@@ -82,7 +87,7 @@ int main(void)
    /*Generamos puntos intervalos*/   
      for(j=0;j<=TOL;j++)
      {points[j]=a+(j*(b-a)/TOL);}
-   /*Buscamos intervalos con almenos una raiz*/
+   /*Buscamos intervalos con al menos una raíz*/
      for(i=1;i<TOL;i++)
  	 {
 		 if(polin_Legndr(o,points[i-1])*polin_Legndr(o,points[i])<0)
@@ -93,11 +98,11 @@ int main(void)
          	 if(polin_Legndr(o,points[i])==0){m++;roots[m-1]=points[i-1];}
                   }
  	 }
-   /*Comprovamos número intervalos*/
+   /*Comprobamos número intervalos*/
      if((I)!=(2.0*o))
-             {printf("\nERROR_01:No se han hallado todas las raíces del polinomio enesimo");
+              {printf("\nERROR_01:No se han hallado todos losintervalos de raíces del polinomio enéimo");
 	     return -1;}
-   /*Aplicamos Newton para obtener raízes*/
+   /*Aplicamos Newton para obtener raíces*/
      for(j=1;j<=I;j+=2)
      {
 	  x_i=(I_roots[j-1]+I_roots[j])/2.0;
@@ -106,27 +111,32 @@ int main(void)
            if(fabs(x_i-x_ii)<=1.0e-12){m++;roots[m-1]=x_ii ; i=101;}
 	    x_i=x_ii;}
      }
-    /*Comprovamos número raices*/
+    /*Comprobamos número raíces*/
      if((m)!=(o))
-        {printf("\nERRORR_02:No se han hallado todas las raíces del polinomio enesimo");
+        {printf("\nERRORR_02:No se han hallado todas las raíces del polinomio enéimo");
        return -1;}
     /*Calculamos suma final aproximada*/
      for(j=0;j<o;j++)
-     {sum+=coefi_Legndr(o,roots[j])*F(roots[j]);}
+     {sum+=coefi_Legndr(o,roots[j])*G(roots[j]);}
      printf("\n Para [n=%2G] la aproximacion es: %.16G",o,sum);
-     printf(" y cota de error: ******************* ");
-     }
-    printf("\n");
+  }
+    printf("\n\n");
     return 0;
  }
 
 /***********************DEFINITIONS*OF*FUNCTIONS********************
- *                                                                 *
- *                                                                 *
- *                                                                 *
- *                                                                 *
+ *          (02) double metNewd(double n, double x)                *
+ *          (03) double polin_Legndr(double n,double x)            *
+ *          (04) double d_polin_Legndr(double n, double x)         *
+ *          (05) double coefi_Legndr(double n,double ro)           *
+ *          (06) void cabecera(void)                               *
  *******************************************************************/
-//Función que evalúa el polinomio de Legendre enésimo para x
+ //(02)Función que implementan el algoritmo del Método de Newton en precisión doble.
+double metNewd(double n, double x)
+{
+    return x-(polin_Legndr(n,x))/(d_polin_Legndr(n,x));
+}
+//(03)Función que evalúa el polinomio de Legendre enésimo para x
  double polin_Legndr(double n,double x)
  {
      double i;
@@ -147,21 +157,32 @@ int main(void)
      }
      return P_iii;
  }
-//Función que evalúa la derivada del polinomio de Legendre enésimo para x
+//(04)Función que evalúa la derivada del polinomio de Legendre enésimo para x
 double d_polin_Legndr(double n,double x)
 {
     return 1.0/(1.0-x*x)*(-n*x*polin_Legndr(n,x)+n*polin_Legndr(n-1.0,x));
 }
 
-//Función que calcula los coeficientes de P(x) de Legendre.
+//(05)Función que calcula los coeficientes de P(x) de Legendre.
   double coefi_Legndr(double n,double ro)
 {
 	double a= (2.0)/((1-ro*ro)*(d_polin_Legndr(n,ro)*d_polin_Legndr(n,ro))) ;
 	return a;
 }
-//Función que implementan el algoritmo del Método de Newton en precisión doble.
-double metNewd(double n, double x)
+//(06) Función que imprime la cabecera del programa.
+void cabecera(void)
 {
-    return x-(polin_Legndr(n,x))/(d_polin_Legndr(n,x));
+printf("\n****************************DATE************************************");
+printf("\n*FECHA ULTIMA MODIFICACIÓN:24/05/2019                              *");
+printf("\n*NOMBRE FICHERO ORIGEN:int_02_L.c                                  *");
+printf("\n*DESCRIPCIÓN: Programa para calcular numéricamente la integral     *");
+printf("\n*                                                                  *");
+printf("\n*     / 1                                                          *");
+printf("\n*     |     e^(-x^2)                                               *");
+printf("\n*     | ------------- dx    mediante cuadratura de Gauss-Legendre. *");
+printf("\n*     |  (1-x^2)^(1/3)                                             *");
+printf("\n*     / 0                                                          *");
+printf("\n********************************************************************");
+printf("\n");
+return ;
 }
-
