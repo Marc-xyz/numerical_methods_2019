@@ -18,7 +18,7 @@
                  *  gcc -g -Wall -O3 -o int_01_C int_01_C.c -lm      * 
                  *  Compilar con  sintaxis standard ANSI C del 1990  *
                  *  gcc -g -Wall -pedantic -o int_01_C int_01_C.c -lm*
-  		 *****************************************************/
+  		         *****************************************************/
 
 //Librerías y definiciones 
 #include<stdio.h>

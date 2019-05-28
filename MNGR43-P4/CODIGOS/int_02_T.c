@@ -84,7 +84,7 @@ printf("\n*           |      e^(-x^2)                                        *")
 printf("\n*           |  -------------- dx   (integral impropia)             *");
 printf("\n*           |   (1-x^2)^(1/3)                                      *");
 printf("\n*           / 0                                                    *");
-printf("\n*                     mediante regla de los Trapecios compuestos.  *");
+printf("\n*       (por defecto) mediante regla de los Trapecios compuestos.  *");
 printf("\n*                                                                  *");
 printf("\n********************************************************************");
 printf("\n");
