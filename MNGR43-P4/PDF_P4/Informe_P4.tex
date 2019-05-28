@@ -56,7 +56,7 @@
 
 
 % Autores y su correspondiente correo
-\author{Práctica 4 (Cuadratura Gaussiana} % Your names
+\author{Práctica 4 (Cuadratura Gaussiana)} % Your names
 \date{\normalsize} 
 \rhead{ \small \theauthor}
 
@@ -69,13 +69,14 @@
 	\hfill (\textbf{\texttt{NIU:} }\textit{1388471})
 \end{tcolorbox}	
 \section{Resumen}
-En el presente documento se comentan las soluciones al ejercicio final propuestos en las sesiones de \textit{Seminarios de Métodos Numéricos} de los días 6, 13  y 20 de Mayo. Los ficheros \texttt{.c} con las implementaciones del código en lenguaje C se adjuntan tal como se detalla en documento del mismo subdirectorio \texttt{README.txt}.\footnote{En el apartado, no numerado, Anexo se responden a algunos de los ejercicios complementarios.}
+En el presente documento se comentan las soluciones al ejercicio final propuestos en las sesiones de \textit{Seminarios de Métodos Numéricos} de los días 6, 13  y 20 de Mayo. Los ficheros \texttt{.c} con las implementaciones del código en lenguaje C se adjuntan tal como se detalla en documento del mismo subdirectorio \texttt{README.txt}.
 \footnotesize
 %\tableofcontents
 %\setcounter{section}{+3}
 \normalsize
 \section{Cálculos previos}
 Consideremos las siguientes manipulaciones algebraicas elementales y definiciones de las integrales dadas. Para la primera integral:
+\footnotesize
  $$
  	F(x) \bigl\lvert_{-1}^{\esp\esp1} \esp:=\displaystyle\int_{-1}^{1}e^{-x^2}dx 
  	\qquad  \qquad \qquad \qquad  \qquad \qquad  \qquad  \qquad \qquad  \qquad \qquad  \qquad  \qquad \qquad \qquad
@@ -88,7 +89,9 @@ Consideremos las siguientes manipulaciones algebraicas elementales y definicione
  	 \cdot  \sqrt{1-x^2} \\ \cod{ (C.Gauss-Chebyshev)}
  	\end{pmatrix} \end{cases}
  $$
+ \normalsize
  Y para la segunda:
+ \footnotesize
 $$
 G(x)\bigl\lvert_{\esp0}^{\esp1} \esp:=\displaystyle\int_{0}^{1}\frac{e^{-x^2}}{\sqrt[3]{1-x^2}}dx \overset{g(x)=g(-x)}{=} \frac{1}{2} \cdot \displaystyle\int_{-1}^{1}\frac{e^{-x^2}}{\sqrt[3]{1-x^2}}dx 
 \qquad  \qquad \qquad \qquad  \qquad \qquad  \qquad  \qquad \qquad 
@@ -102,9 +105,9 @@ $$
 \quad \displaystyle \int_{-1}^{1}\ \frac{1}{2} \left(e^{-x^2} \cdot  \sqrt[6]{1-x^2}\right) \frac{1}{\sqrt{1-x^2}}dx \quad \quad \Rightarrow \begin{pmatrix} g_2(x):=e^{-x^2} \cdot  \sqrt[6]{1-x^2} \\\cod{ (C.Gauss-Chebyshev)} \end{pmatrix}
 \end{cases}
 $$
- \newpage
+\normalsize
 \section{Procedimiento general}
- 
+\subsection{Primer punto}
  Tal como se detalla en el primer punto del \textit{procedimiento general}, en este caso mediante una adaptación del \textit{método de la bisección}, se hallan todos los intervalos en los que hay una única raíz del polinomio ortogonal dado. Esto lo podemos hacer ya que por \textbf{Lema 1} sabemos que  todas las raíces de estos polinomios son reales y simples, por tanto esperamos $n$ intervalos si estos tienen una longitud \textit{suficientemente} pequeña.
  
  Para lograr esto, con una filosofía heurística, dividimos el intervalo $[-1,1]$ en \cod{TOL} intervalos de longitud $\frac{2}{\cod{TOL}}$ y comprobamos si hay cambio de signo en cada uno de ellos (cosa que implicaría la presencia de al menos una raíz, por Teorema de Bolzano). 
@@ -113,10 +116,49 @@ $$
  
  El valor \cod{TOL} puede modificar-se, por ejemplo \cod{\#define TOL 10000}  en vez de \cod{\#define TOL 1000}, aunque  para polinomios de grado $\leq 20$ no es necesario. En caso de que en alguno de los intervalos hubiera más de una raíz, mediante la presencia de los contadores anteriormente mencionados, el programa imprimiría  un mensaje de error que solventaríamos modificando el paramento \cod{TOL}.  
  
- Una vez encontrados estos intervalos eligiendo el punto medio y aplicamos el proceso iterativo de Newton-Raphson de convergencia cuadrática para raíces simples conseguiriamos las raíces con  tolerancia deseada o superior, sin necesidad de aplicar Sturm y asegurando que hemos encontrado todas las raíces del polinomio con la tolerancia deseada.
- 
-El sistema lineal que han de cumplir los coeficientes $a_i$ puede plantearse 
+ Una vez encontrados estos intervalos, eligiendo el punto medio y aplicamos el proceso iterativo de Newton-Raphson de convergencia cuadrática para raíces simples, conseguiriamos las raíces con  tolerancia deseada o superior, sin necesidad de aplicar Sturm y asegurando que hemos encontrado todas las raíces del polinomio con la tolerancia deseada.
+\subsection{Segundo punto}
+Los coeficientes $a_i$  debe cumplir las condiciones de la \textbf{Definición 1} esto es que deben de ser exactas para polinomios de la forma $f(x)=x^k$ donde $k=0,\cdots,n-1$. Y esto ya define un sistema lineal compatible y determinado. Veamos esto mismo con más detalle para cada uno de los dos tipos de Cuadraturas consideradas.
+
+Para la cuadratura de \textbf{Gauss-Legendre} donde la función de peso es $w(x)=1$ queremos que se cumpla:
+$$
+\displaystyle a_1 \cdot {x_1}^k +a_2 \cdot {x_2}^k +
+\cdots + a_n\cdot {x_n}^k = \esp \sum_{i=1}^{n}a_i{x_i}^k = \int_{-1}^{ \esp 1}x^kdx= \left.\frac{x^{k+1}}{k+1}\right|_{-1}^{\esp 1}=\frac{1+{(-1)}^k}{k+1}
+$$ 
+si consideramos esto para $k=0,\cdots, n-1$ obtenemos el siguiente sistema lineal:
+\footnotesize
+$$
+\left\lbrace
+\begin{matrix}
+a_1&+&a_2&+&\cdots&+&a_n&=&2\\
+a_1x_1&+&a_2x_2&+&\cdots&+&a_nx_n&=&0\\
+\vdots&&&&\vdots&&&&\vdots\\
+a_1x_1^{n-1}&+&a_2x_2^{n-1}&+&\cdots&+&a_nx_n^{n-1}&=&\frac{1+{(-1)}^{n-1}}{n}\\
+\end{matrix}
+\right.
+$$ 
+\normalsize
+
+Para la cuadratura de \textbf{Gauss-Chebyshev} donde la función de peso es $w(x)=\frac{1}{\sqrt{1-x^2}}$ queremos que se cumpla:
+$$
+\displaystyle a_1 \cdot {x_1}^k +a_2 \cdot {x_2}^k +
+\cdots + a_n\cdot {x_n}^k = \esp \sum_{i=1}^{n}a_i{x_i}^k = \int_{-1}^{ \esp 1}\frac{x^k}{\sqrt{1-x^2}}dx
+$$ 
+si consideramos esto para $k=0,\cdots, n-1$ obtenemos el siguiente sistema lineal:
+\footnotesize
+$$
+\left\lbrace
+\begin{matrix}
+a_1&+&a_2&+&\cdots&+&a_n&=&\pi\\
+a_1x_1&+&a_2x_2&+&\cdots&+&a_nx_n&=&0\\
+\vdots&&&&\vdots&&&&\vdots\\
+a_1x_1^{n-1}&+&a_2x_2^{n-1}&+&\cdots&+&a_nx_n^{n-1}&=&\displaystyle\int_{-1}^{ \esp 1}\cfrac{x^{n-1}}{\sqrt{1-x^2}}dx\\
+\end{matrix}
+\right.
+$$ 
+\normalsize
  \section{Apartado a)}
+ Los resultados obtenidos, se muestran en Tablas 1 y 2. En el caso de la primera integral dada observamos una clara diferencia a favor de la cuadratura Gaussiana con polinomios de Legendre. En el caso de la segunda integral, ninguno de los dos métodos da más de dos decimales correctos, aunque de nuevo, los polinomios de Legendre obtienen mejores resultados.
 \begin{table}[ht]
 	\footnotesize
 	\centering
@@ -139,11 +181,9 @@ El sistema lineal que han de cumplir los coeficientes $a_i$ puede plantearse
  	\cod{n=12}&{\textbf{1.493648265624854}}&\textbf{1.49}5728452515196\\
  	\hline
  \end{tabular}
-	\caption{\footnotesize Resultados obtenidos  mediante \cod{pr3\_abc\_d.c}}
+	\caption{\footnotesize Resultados obtenidos para la primera integral}
 \label{tab:pr3}
 \normalsize
-\end{table}
-\begin{table}[ht]
 	\footnotesize
 	\centering
 	\begin{tabular}{|c|c|c|}
@@ -165,13 +205,21 @@ El sistema lineal que han de cumplir los coeficientes $a_i$ puede plantearse
 		\cod{n=12}&\textbf{0.88}31932589792649&\textbf{0.8}930783042638903\\
 		\hline
 	\end{tabular}
-	\caption{\footnotesize Resultados obtenidos  mediante \cod{pr3\_abc\_d.c}}
+	\caption{\footnotesize Resultados obtenidos para la segunda integral}
 	\label{tab:pr3}
 	\normalsize
 \end{table}
+La explicación de estos resultados esta fuertemente relacionado con la \textbf{función de peso}. Si cojeemos unos o otros polinomios tal como hemos visto  en  la sección de \textbf{cálculos previos} la función $f(x)$ cambia, y por \textbf{Teorema de la fórmula del error de la cuadratura gaussiana}, el error depende de la 2n-enésima  derivada de esta función $f$. En el caso de los polinomios de Legendre esta no varia ya que $w(x)=1$, y en el caso de Chebyshev se multiplica por $\sqrt{1-x^2}$. Esto mismo hace empeorar la aproximación de la primera integral para \textbf{Chebyshev}. En la segunda integral las funciones $g_1(x)$ y $g_2(x)$ bastante similares a $f_2(x)$ obtienen resultados similares. La \textit{ mejor elección} de $P(x)$ ortogonales dependerá de $f(x)$.
+\section{Apartado b)}
+Si renegamos de la \textbf{Cuadratura Gaussiana} y intentamos mejorar los resultados obtenidos por regla de los trapecios compuesta, nos topamos con la abismales diferencias de que para igualar el valor de \cod{n=6} de Legendre debemos dividir el intervalo en \cod{n=1024} intervalos para la primera integral. Con \cod{n=4096} obtenemos una cota de error  de \texttt{7.947286E-08}.
+
+ Para la segunda integral no tiene mucho sentido aplicar trapecios  al tratarse de una integral impropia con segunda derivada no acotada, esperamos errores arbitrariamente grandes si no se da antes un \cod{overflow} en la memoria de la variable.
+ No obstante integrando la función de $[0,1-\delta]$ podemos obtener una aproximación \textit{coherente} observando la convergencia con diferentes valores de $\delta$, sabiendo que la aproximación será por defecto y no por exceso. 
+
 \section{Ejercicios opcionales}
 \subsection{Extensión de las fórmulas de cuadratura Gaussiana  a un intervalo $[a,b]$}
 Consideremos el cambio de variable de 
+\footnotesize
 $$
 \begin{cases}
 \displaystyle x=\frac{(b-a)t+(b-a)}{2}\\
@@ -184,12 +232,16 @@ $$
 \displaystyle\frac{(b-a)(-1)+(b+a)}{2}=\frac{-b+a+b+a}{2}=a\\
 \end{cases}
 $$
+\normalsize
 Aplicando esto a la fórmula de cuadratura:
+\footnotesize
 $$
 \displaystyle \int_{a}^{b}w(x)f(x)dx= \frac{b-a}{2}\int_{-1}^{\esp1}w\left(\frac{(b-a)t+(b-a)}{2}\right)f\left(\frac{(b-a)t+(b-a)}{2}\right)dt
 $$
+\normalsize
 \subsection{Calculo de la longitud del arco de una elipse}
 Partiendo de la siguiente  ecuación de una elipse, calcularemos la longitud del arco de esta en el intervalo $[-1,1]$  del plano superior, mediante cuadratura de Gauss-Legendre. Primero expresamos $y$ en función de $x$ y calculamos $y'(x)$:
+\footnotesize
  $$
  \left(\frac{x}{2}\right)^2+ \left(2y\right)^2=1 
  \Rightarrow
@@ -197,17 +249,20 @@ Partiendo de la siguiente  ecuación de una elipse, calcularemos la longitud del 
  y'(x)_+=\displaystyle\frac{-x}{4\sqrt{1-\left(\frac{x}{2}\right)^2}}
  \end{cases}
  $$
-Seguidamente consideramos la integral del calculo de longitud de un arco
-$$
+ \normalsize
+Seguidamente consideramos la integral del calculo de longitud de un arco\\
+\footnotesize
+$
 \displaystyle L(y(x),a,b)= \int_{a}^{b} \sqrt{1+y'(x)^2}dx 
-$$
-substituyendo
+$
+\normalsize
+y substituyendo:
+\footnotesize
 $$
 \displaystyle L(y(x),-1,1)= \int_{-1}^{\esp 1} \sqrt{1+y'(x)^2}dx= \int_{-1}^{\esp1} \sqrt{1+\frac{x^2}{16(4-x^2)}}dx=
-$$
-$$
 \int_{-1}^{\esp1} \sqrt{\frac{64-15x^2}{64-16x^2}}dx
 $$
-
+\normalsize
+Aplicando Cuadratura de Gauss-Legendre obtenemos, para \cod{n=16} y \cod{n=18},  $L(y(x),-1,1)\approx$ \texttt{2.006145090438143}.
  
 \end{document}
