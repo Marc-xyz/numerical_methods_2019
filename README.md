@@ -1,9 +1,9 @@
 # numerical_methods_2019
 
 ## Resumen del Contenido
-En el repositorio se recogen las cuatro prácticas efectuadas para la asignatura de métodos numéricos durante el curso académico 2018-2019. 
+En el repositorio se recogen las cuatro prácticas efectuadas para la asignatura de métodos numéricos (segundo curso del grado univerisatio en Matemáticas) durante el curso académico 2018-2019. 
 
-Se ha hecho un uso minimilaista del lenguaje **C** intentado hacer un uso muy limitado de las funciones. Los gráficos  se han realizado con la ayuda de _GNUplot_
+Se ha hecho un uso minimilaista del lenguaje **C** intentado hacer un uso muy limitado de las funciones. Los gráficos  se han realizado con la ayuda de _GNUplot_.
 ```
 MNGR43-P0  --> "Material recordatorio uso terminal de distribución Linux" 
          + "Algunas prácticas anteriores"
